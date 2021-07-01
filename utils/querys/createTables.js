@@ -59,13 +59,11 @@ CREATE TABLE IF NOT EXISTS categorias (
   nombre varchar(100) not null
 );
 
-CREATE TABLE IF NOT EXISTS proyectos (
-  id_proyecto int primary key auto_increment,
-  nombre varchar(100) not null
-);
+
 
 CREATE TABLE IF NOT EXISTS incidencias (
   id_incidencia int primary key auto_increment,
+  prioridad varchar(45) not null,
   nombre varchar(100) not null
 );
 
@@ -86,19 +84,9 @@ CREATE TABLE IF NOT EXISTS incidencia_usuario (
   id_categoria int not null,
   CONSTRAINT fk_incidencia_categoria_id FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
   on delete cascade
-  on update cascade,
-
-  id_proyecto int not null,
-  CONSTRAINT fk_incidencia_proyecto_id FOREIGN KEY (id_proyecto) REFERENCES proyectos(id_proyecto)
-  on delete cascade
   on update cascade
 );
 
-CREATE TABLE IF NOT EXISTS tipos (
-  id_tipo int primary key auto_increment,
-  nombre varchar(65) not null,
-  decripcion varchar(200) not null
-);
 
 CREATE TABLE IF NOT EXISTS fallas (
   id_falla int primary key auto_increment,
@@ -106,8 +94,8 @@ CREATE TABLE IF NOT EXISTS fallas (
   estado varchar(65) not null, 
   fecha date,
 
-  id_tipo int not null,
-  CONSTRAINT fk_falla_tipo_id FOREIGN KEY (id_tipo) REFERENCES tipos(id_tipo)
+  id_categoria int not null,
+  CONSTRAINT fk_falla_categoria_id FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
   on delete cascade
   on update cascade
 );
