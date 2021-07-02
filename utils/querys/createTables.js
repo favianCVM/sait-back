@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS incidencia_usuario (
   id_incidencia_usuario int primary key auto_increment,
   fecha date,
   prioridad varchar(65) not null,
+  descripcion varchar(300)not null,
 
   id_incidencia int not null,
   CONSTRAINT fk_incidencia_id FOREIGN KEY (id_incidencia) REFERENCES incidencias(id_incidencia)
