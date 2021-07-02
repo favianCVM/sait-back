@@ -70,4 +70,17 @@ module.exports = `
   insert into equipo_componente(id_equipo, id_componente) values (5, 4);
   insert into equipo_componente(id_equipo, id_componente) values (5, 5);
   insert into equipo_componente(id_equipo, id_componente) values (5, 6); 
+
+  insert into incidencias(nombre) values("Windows malfuncionando");
+  insert into incidencias(nombre) values("monitor no muestra imagen");
+  insert into incidencias(nombre) values("teclado no funciona");
+  insert into incidencias(nombre) values("powerpoint no funciona");
+  insert into incidencias(nombre) values("word no funciona");
+  insert into incidencias(nombre) values("mouse no funciona");
+
+  insert into fallas(descripcion, id_categoria) values("descripcion de falla",1);
+  insert into fallas(descripcion, id_categoria) values("descripcion de falla",2);
+  insert into fallas(descripcion, id_categoria) values("descripcion de falla",3);
+  insert into fallas(descripcion, id_categoria) values("descripcion de falla",4);
+  insert into fallas(descripcion, id_categoria) values("descripcion de falla",1);
   `;
