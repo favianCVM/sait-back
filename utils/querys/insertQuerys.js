@@ -1,11 +1,4 @@
-const insertIncidenciaUsuario = ({
-  fecha,
-  prioridad,
-  id_incidencia,
-  id_usuario,
-  id_categoria,
-}) =>
-  `INSERT INTO incidencia_usuario(fecha, prioridad, id_incidencia, id_usuario, id_categoria) VALUES (${fecha},${prioridad},${id_incidencia},${id_usuario},${id_categoria})`;
+const insertIncidenciaUsuario = `INSERT INTO incidencia_usuario SET ?`;
 
 const insertFallaIncidencia = ({ id_falla, id_incidencia }) =>
   `INSERT INTO incidencia_falla(id_falla, id_incidencia) VALUES (${id_falla},${id_incidencia})`;

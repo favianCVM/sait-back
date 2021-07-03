@@ -8,12 +8,13 @@ const getCategorias = "SELECT * FROM categorias";
 
 const getFallas = "SELECT * FROM fallas";
 
-const getIncidencias =
+const getIncidenciaUsuario =
   "SELECT * FROM incidencia_usuario INNER JOIN usuarios ON incidencia_usuario.id_usuario=usuarios.id_usuario";
-
+const getIncidencias = "SELECT * FROM incidencias";
 module.exports = {
   getFallas,
   getIncidencias,
+  getIncidenciaUsuario,
   getTecnicos,
   getUsuarios,
   getCategorias,

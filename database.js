@@ -45,6 +45,8 @@ const initServer = (app) => {
               app.listen(PORT, () => {
                 console.log(`app's up at ${PORT}`);
                 app.use(require("./routes/users"));
+                app.use(require("./routes/commons"));
+                app.use(require("./routes/incidences"));
               });
             });
           });
