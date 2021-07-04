@@ -15,11 +15,6 @@ module.exports = `
   insert into componentes(nombre, descripcion) values ("fan cooler", "a");
   insert into componentes(nombre, descripcion) values ("placa base", "a");
   
-  insert into categorias(nombre) values ("hardware");
-  insert into categorias(nombre) values ("software");
-  insert into categorias(nombre) values ("licencias");
-  insert into categorias(nombre) values ("redes");
-  
   insert into tecnicos(id_persona) values (1);
   insert into tecnicos(id_persona) values (2);
   insert into tecnicos(id_persona) values (3);
@@ -77,10 +72,4 @@ module.exports = `
   insert into incidencias(nombre) values("powerpoint no funciona");
   insert into incidencias(nombre) values("word no funciona");
   insert into incidencias(nombre) values("mouse no funciona");
-
-  insert into fallas(descripcion, id_categoria) values("descripcion de falla",1);
-  insert into fallas(descripcion, id_categoria) values("descripcion de falla",2);
-  insert into fallas(descripcion, id_categoria) values("descripcion de falla",3);
-  insert into fallas(descripcion, id_categoria) values("descripcion de falla",4);
-  insert into fallas(descripcion, id_categoria) values("descripcion de falla",1);
   `;

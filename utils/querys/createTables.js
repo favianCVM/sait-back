@@ -54,13 +54,6 @@ CREATE TABLE IF NOT EXISTS equipo_componente (
   on update cascade
 );
 
-CREATE TABLE IF NOT EXISTS categorias (
-  id_categoria int primary key auto_increment,
-  nombre varchar(100) not null
-);
-
-
-
 CREATE TABLE IF NOT EXISTS incidencias (
   id_incidencia int primary key auto_increment,
   nombre varchar(100) not null
@@ -71,6 +64,8 @@ CREATE TABLE IF NOT EXISTS incidencia_usuario (
   fecha date,
   prioridad varchar(65) not null,
   descripcion varchar(300)not null,
+  estado varchar(60) not null,
+  categoria varchar(60) not null,
 
   id_incidencia int not null,
   CONSTRAINT fk_incidencia_id FOREIGN KEY (id_incidencia) REFERENCES incidencias(id_incidencia)
@@ -80,49 +75,18 @@ CREATE TABLE IF NOT EXISTS incidencia_usuario (
   id_usuario int not null,
   CONSTRAINT fk_incidencia_usuario_id FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
   on delete cascade
+  on update cascade
+);
+
+CREATE TABLE IF NOT EXISTS incidencia_tecnico(
+  id_incidencia_tecnico int primary key auto_increment,
+  id_tecnico int not null,
+  CONSTRAINT fk_incidencia_tecnico_id FOREIGN KEY (id_tecnico) REFERENCES tecnicos(id_tecnico)
+  on delete cascade
   on update cascade,
-
-  id_categoria int not null,
-  CONSTRAINT fk_incidencia_categoria_id FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
-  on delete cascade
-  on update cascade
-);
-
-
-CREATE TABLE IF NOT EXISTS fallas (
-  id_falla int primary key auto_increment,
-  descripcion varchar(300) not null,
-
-  id_categoria int not null,
-  CONSTRAINT fk_falla_categoria_id FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
-  on delete cascade
-  on update cascade
-);
-
-CREATE TABLE IF NOT EXISTS incidencia_falla (
-  id_incidencia_falla int primary key auto_increment,
 
   id_incidencia int not null,
-  CONSTRAINT fk_incidencia_falla_id FOREIGN KEY (id_incidencia) REFERENCES incidencias(id_incidencia)
-  on delete cascade
-  on update cascade,
-
-  id_falla int not null,
-  CONSTRAINT fk_falla_incidencia_id FOREIGN KEY (id_falla) REFERENCES fallas(id_falla)
-  on delete cascade
-  on update cascade
-);
-
-CREATE TABLE IF NOT EXISTS falla_tecnico(
-  id_falla_tecnico int primary key auto_increment,
-  stado varchar(10) not null,
-  id_tecnico int not null,
-  CONSTRAINT fk_tecnico_id FOREIGN KEY (id_tecnico) REFERENCES tecnicos(id_tecnico)
-  on delete cascade
-  on update cascade,
-
-  id_falla int not null,
-  CONSTRAINT fk_tecnico_falla_id FOREIGN KEY (id_falla) REFERENCES incidencia_falla(id_falla)
+  CONSTRAINT fk_tecnico_incidencia_id FOREIGN KEY (id_incidencia) REFERENCES incidencias(id_incidencia)
   on delete cascade
   on update cascade
 )`;
