@@ -1,7 +1,7 @@
 module.exports = `
 CREATE TABLE IF NOT EXISTS personas (
     id_persona int primary key auto_increment,
-    nombre varchar(65) not null,
+    persona_nombre varchar(65) not null,
     apellido varchar(65) not null,
     genero varchar(65) not null,
     cedula varchar(65) not null
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS equipos (
 
 CREATE TABLE IF NOT EXISTS componentes (
   id_componente int primary key auto_increment,
-  nombre varchar(65) not null,
+  componente_nombre varchar(65) not null,
   descripcion varchar(230) not null
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS equipo_componente (
 
 CREATE TABLE IF NOT EXISTS incidencias (
   id_incidencia int primary key auto_increment,
-  nombre varchar(100) not null
+  incidencia_nombre varchar(100) not null
 );
 
 CREATE TABLE IF NOT EXISTS incidencia_usuario (
@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS incidencia_usuario (
   fecha date,
   prioridad varchar(65) not null,
   descripcion varchar(300)not null,
+  comentario varchar(400),
   estado varchar(60) not null,
   categoria varchar(60) not null,
 
@@ -81,12 +82,14 @@ CREATE TABLE IF NOT EXISTS incidencia_usuario (
 CREATE TABLE IF NOT EXISTS incidencia_tecnico(
   id_incidencia_tecnico int primary key auto_increment,
   id_tecnico int not null,
+  estado varchar(65) not null,
+
   CONSTRAINT fk_incidencia_tecnico_id FOREIGN KEY (id_tecnico) REFERENCES tecnicos(id_tecnico)
   on delete cascade
   on update cascade,
 
-  id_incidencia int not null,
-  CONSTRAINT fk_tecnico_incidencia_id FOREIGN KEY (id_incidencia) REFERENCES incidencias(id_incidencia)
+  id_incidencia_usuario int not null,
+  CONSTRAINT fk_tecnico_incidencia_usuario_id FOREIGN KEY (id_incidencia_usuario) REFERENCES incidencia_usuario(id_incidencia_usuario	)
   on delete cascade
   on update cascade
 )`;
