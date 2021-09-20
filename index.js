@@ -1,13 +1,14 @@
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
+const express = require('express');
 
-/* app and conection */
-const { initServer } = require("./database");
 const app = express();
+const PORT = process.env.PORT || 4000;
 
-app.use(morgan("dev"));
-app.use(cors());
-app.use(express.json());
+app.get('/', (request, response) => {
+  response.status(200).json({
+    message: 'Hello Docker!',
+  });
+});
 
-initServer(app);
+app.listen(PORT, () => {
+  console.log(`Server is up on localhost:${PORT}`);
+});
