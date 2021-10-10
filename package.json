@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "docker-compose -f docker-compose.dev.yml up",
+    "build": "docker-compose -f docker-compose.dev.yml build --no-cache",
+    "down": "docker-compose -f docker-compose.dev.yml down --remove-orphans",
+    "dev.nodemon": "nodemon -L"
   },
   "author": "",
   "license": "ISC",
@@ -15,8 +17,13 @@
     "express": "^4.17.1",
     "formidable": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.0.10",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.13"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
   }
 }
