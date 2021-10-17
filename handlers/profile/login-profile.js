@@ -10,9 +10,9 @@ module.exports = (req, res) => {
     }})
       .then((user)=>{
         if(user === null){
-          res.status(401).json({
-              message: "Invalid credentials!",
-          });
+          res.status(400).json({
+            message: 'Credenciales invalidas.',
+          })
         } else {
 
           //COMMENT THIST TO WORK WITH ENCRYPTED PASSWORDS
@@ -24,7 +24,7 @@ module.exports = (req, res) => {
 
           return resolve({
             token,
-            ...user
+            ...user.dataValues
           })
 
           bcryptjs.compare(req.body.password, user.password, (err, res) => {

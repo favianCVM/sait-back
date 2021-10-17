@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS profiles (
   password VARCHAR(45) NOT NULL,
   sex VARCHAR(45) NOT NULL,
   dni VARCHAR(45) NOT NULL,
-  role VARCHAR(45) NOT NULL,
+  role INT NOT NULL,
   birth_date VARCHAR(45) NOT NULL,
   PRIMARY KEY (id),
   createdAt DATE NOT NULL,
