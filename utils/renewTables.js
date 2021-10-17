@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS profiles (
   password VARCHAR(45) NOT NULL,
   sex VARCHAR(45) NOT NULL,
   dni VARCHAR(45) NOT NULL,
-  role VARCHAR(45) NOT NULL,
-  birth_date VARCHAR(45) NOT NULL,
+  role INT NOT NULL,
+  birth_date DATE NOT NULL,
   PRIMARY KEY (id),
   createdAt DATE NOT NULL,
   updatedAt DATE NOT NULL
@@ -33,6 +33,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 
 DROP TABLE IF EXISTS issues ;
+
 
 CREATE TABLE IF NOT EXISTS incidences (
   id INT NOT NULL,
@@ -51,6 +52,7 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS issue_types ;
 
+
 CREATE TABLE IF NOT EXISTS issue_types (
   id INT NOT NULL,
   name VARCHAR(45) NOT NULL,
@@ -68,6 +70,7 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS device_types ;
 
+
 CREATE TABLE IF NOT EXISTS device_types (
   id INT NOT NULL,
   name VARCHAR(45) NOT NULL,
@@ -82,6 +85,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 
 DROP TABLE IF EXISTS components ;
+
 
 CREATE TABLE IF NOT EXISTS components (
   id INT NOT NULL,
@@ -99,6 +103,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 
 DROP TABLE IF EXISTS issues ;
+
 
 CREATE TABLE IF NOT EXISTS issues (
   id INT NOT NULL,
@@ -121,6 +126,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 
 DROP TABLE IF EXISTS devices ;
+
 
 CREATE TABLE IF NOT EXISTS devices (
   id INT NOT NULL,
@@ -178,6 +184,8 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS incidence_issue ;
 
+
+
 CREATE TABLE IF NOT EXISTS incidence_issue (
   id INT NOT NULL,
   id_incidence INT NOT NULL,
@@ -204,6 +212,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 
 DROP TABLE IF EXISTS profile_incidence ;
+
 
 CREATE TABLE IF NOT EXISTS profile_incidence (
   id INT NOT NULL,
@@ -232,6 +241,7 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS issue_device ;
 
+
 CREATE TABLE IF NOT EXISTS issue_device (
   id INT NOT NULL,
   id_device INT NOT NULL,
@@ -259,6 +269,7 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS technicians ;
 
+
 CREATE TABLE IF NOT EXISTS technicians (
   id INT NOT NULL,
   id_profile INT NOT NULL,
@@ -274,7 +285,6 @@ CREATE TABLE IF NOT EXISTS technicians (
 ENGINE = InnoDB; 
 
 INSERT INTO profiles (id, name, last_name, email, password, sex, dni, role, birth_date, createdAt, updatedAt) VALUES ('0', 'admin', 'admin', 'admin@admin.com', 'admin', 'f', '11111111111', '60', '10/10/2020', '2021-10-04', '2021-10-12');
-
 
 SET FOREIGN_KEY_CHECKS=1; -- to re-enable them
 
