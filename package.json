@@ -1,27 +1,32 @@
 {
   "name": "sait-back",
   "version": "1.0.0",
-  "description": "",
+  "description": "backend of SAIT incidence system",
   "main": "index.js",
   "scripts": {
     "dev": "docker-compose -f docker-compose.dev.yml up",
     "build": "docker-compose -f docker-compose.dev.yml build --no-cache",
     "down": "docker-compose -f docker-compose.dev.yml down --remove-orphans",
-    "dev.nodemon": "nodemon -L"
+    "dev.nodemon": "nodemon --no-warnings -L"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-jwt": "^6.1.0",
     "formidable": "^1.2.2",
+    "fs": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "mongoose": "^6.0.10",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.13"
+    "mysql2": "^2.3.2",
+    "nodemon": "^2.0.13",
+    "sequelize": "^6.7.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.13"

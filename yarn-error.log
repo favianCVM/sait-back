@@ -1,20 +1,20 @@
 Arguments: 
-  /home/fabian/.nvm/versions/node/v14.18.0/bin/node /usr/local/bin/yarn add mongoose lodash
+  /home/fabian/.nvm/versions/node/v14.18.1/bin/node /usr/local/bin/yarn add mysql
 
 PATH: 
-  /home/fabian/.nvm/versions/node/v14.18.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+  /home/fabian/.nvm/versions/node/v14.18.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
 
 Yarn version: 
   1.22.15
 
 Node version: 
-  14.18.0
+  14.18.1
 
 Platform: 
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/fabian/Desktop/sait-back/node_modules/.bin/is-ci'
+  Error: EACCES: permission denied, unlink '/home/fabian/Desktop/sait-back/node_modules/.bin/mime'
 
 npm manifest: 
   {
@@ -36,6 +36,8 @@ npm manifest:
       "express": "^4.17.1",
       "formidable": "^1.2.2",
       "jsonwebtoken": "^8.5.1",
+      "lodash": "^4.17.21",
+      "mongoose": "^6.0.10",
       "morgan": "^1.10.0",
       "mysql": "^2.18.1",
       "nodemon": "^2.0.13"

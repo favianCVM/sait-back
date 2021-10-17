@@ -1,26 +1,32 @@
-import { handleError } from '../utils/';
-import { ALL } from './roles';
+const { handleError } = require('../utils');
+const jwt = require('express-jwt');
 
-
-module.exports = (roles, action = '', save_log = true) => {
-  return (req, res, next) => {
-    const { password, ...data } = req.body;
-    console.info('request: ', `${req.baseUrl}${req.url}`, req.method, JSON.stringify(data));
-    if (req.user) {
-      if (roles.includes(req.user.user_type) || roles.includes(ALL))
-        next();
-      else
-        return handleError({
-          status: 403,
-          message: "Debe iniciar sesión o registrarse para ejecutar esta acción."
-        }, {}, res);
-
-        /* Save logs without token and is public access */
-    }  else {
-      return handleError({
-        status: 403,
-        message: "Debe iniciar sesión o registrarse para ejecutar esta acción."
-      }, {}, res);
-    }
+function authorize(roles = []) {
+  // roles param can be a single role string (e.g. Role.User or 'User') 
+  // or an array of roles (e.g. [Role.Admin, Role.User] or ['Admin', 'User'])
+  if (typeof roles === 'string') {
+      roles = [roles];
   }
+  
+  const secret = process.env.JWT_SECRET;
+  return [
+      // authenticate JWT token and attach user to request object (req.user)
+      jwt({ secret, algorithms: ['HS256'] }),
+
+      // authorize based on user role
+      (req, res, next) => {
+          if (roles.length && (!roles.includes(req.user.role) || !req.user.role)) {
+              // user's role is not authorized
+              return handleError({
+                status: 403,
+                message: "Debe iniciar sesión o registrarse para ejecutar esta acción."
+              }, {}, res);
+          }
+
+          // authentication and authorization successful
+          next();
+      }
+  ];
 }
+
+module.exports = authorize

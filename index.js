@@ -1,20 +1,71 @@
-const express = require('express')
-const morgan = require('morgan')
-const cors = require('cors')
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+const mysql = require('mysql2');
 
+/**
+ * ENVS
+ */
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.APP_PORT || 8000;
 
-app.use(morgan("dev"))
-app.use(cors())
-app.use(express.json())
+/**
+ * MIDDLEWARES
+ */
+app.use(morgan("dev"));
+app.use(cors());
+app.use(express.json());
 
-app.get('/', (request, response) => {
-  response.status(200).send('holamundo desde docker');
+/**
+ * DB OBJECT
+ */
+const db_connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database : process.env.DB_NAME,
+  multipleStatements: true,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is up on localhost:${PORT}`);
-});
+/**
+ * ROUTES
+ */
+const routes = require('./routes');
 
-console.log('hola mundo');
+app.use(routes);
+
+/**
+ * SERVER INIT
+ */
+
+const start = () => {
+  db_connection.connect((err)=>{
+    if(err){
+      start()
+      throw err;
+    }
+
+    db_connection.query(require('./utils/createTables'), (err) => {
+      if(err){
+        start()
+        throw err;
+      }
+
+      app.listen(PORT, (err) => {
+        if(err){
+          start()
+          throw err;
+        }
+        console.log(`------Server is up on localhost:${PORT}`);
+  
+        module.exports = {db_connection, app}
+      });
+    })
+  })
+}
+
+start()
+
