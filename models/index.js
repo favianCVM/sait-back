@@ -5,17 +5,7 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const db = {};
 
-const {
-  DB_HOST,
-  DB_NAME,
-  DB_USERNAME,
-  DB_PASSWORD,
- } = process.env;
-
-let sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
-  host: DB_HOST,
-  dialect: 'mysql'
-});
+let sequelize = new Sequelize(process.env.DB_URL)
 
 fs
   .readdirSync(__dirname)
@@ -29,7 +19,6 @@ fs
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
-    console.log('el modelname', modelName);
     db[modelName].associate(db);
   }
 });

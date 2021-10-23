@@ -4,7 +4,7 @@ const { createJWToken } = require('../../libs/auth')
 
 module.exports = (req, res) => {
   return new Promise((resolve, reject)=>{
-    models.profiles.findOne({where:{
+    models.profiles.findOne({ where: {
       email: req.body.email,
       password: req.body.password,
     }})

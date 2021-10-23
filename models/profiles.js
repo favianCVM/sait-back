@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     dni: DataTypes.STRING,
     role: DataTypes.NUMBER,
     birth_date: DataTypes.DATE,
-  }, {});
+  }, {
+    timestamps: false
+  });
   profiles.associate = function(models) {
     // associations can be defined here
   };
