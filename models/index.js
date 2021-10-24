@@ -4,6 +4,9 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const db = {};
+const dotenv = require('dotenv')
+
+dotenv.config()
 
 let sequelize = new Sequelize(process.env.DB_URL)
 
