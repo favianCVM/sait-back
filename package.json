@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "dev": "docker-compose -f docker-compose.dev.yml up",
-    "build": "docker-compose -f docker-compose.dev.yml build --no-cache",
-    "down": "docker-compose -f docker-compose.dev.yml down --remove-orphans",
+    "dev.docker": "docker-compose -f docker-compose.dev.yml up",
+    "build.docker": "docker-compose -f docker-compose.dev.yml build --no-cache",
+    "down.docker": "docker-compose -f docker-compose.dev.yml down --remove-orphans",
     "dev.nodemon": "nodemon --no-warnings -L"
   },
   "author": "",
