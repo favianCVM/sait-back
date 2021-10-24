@@ -1,46 +1,52 @@
 Arguments: 
-  /home/fabian/.nvm/versions/node/v14.18.1/bin/node /usr/local/bin/yarn add mysql
+  /usr/bin/node /usr/local/bin/yarn install --ignore-engines
 
 PATH: 
-  /home/fabian/.nvm/versions/node/v14.18.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
 
 Yarn version: 
-  1.22.15
+  1.22.17
 
 Node version: 
-  14.18.1
+  10.19.0
 
 Platform: 
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/fabian/Desktop/sait-back/node_modules/.bin/mime'
+  Error: EACCES: permission denied, mkdir '/home/fabian/Desktop/sait-back/node_modules/abbrev'
 
 npm manifest: 
   {
     "name": "sait-back",
     "version": "1.0.0",
-    "description": "",
+    "description": "backend of SAIT incidence system",
     "main": "index.js",
     "scripts": {
       "dev": "docker-compose -f docker-compose.dev.yml up",
       "build": "docker-compose -f docker-compose.dev.yml build --no-cache",
       "down": "docker-compose -f docker-compose.dev.yml down --remove-orphans",
-      "dev.nodemon": "nodemon -L"
+      "dev.nodemon": "nodemon --no-warnings -L"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
+      "bcryptjs": "^2.4.3",
       "cors": "^2.8.5",
       "dotenv": "^10.0.0",
       "express": "^4.17.1",
+      "express-jwt": "^6.1.0",
       "formidable": "^1.2.2",
+      "fs": "0.0.1-security",
       "jsonwebtoken": "^8.5.1",
       "lodash": "^4.17.21",
-      "mongoose": "^6.0.10",
+      "make-runnable": "^1.3.10",
       "morgan": "^1.10.0",
       "mysql": "^2.18.1",
-      "nodemon": "^2.0.13"
+      "mysql2": "^2.3.2",
+      "nodemon": "^2.0.13",
+      "pg": "^8.7.1",
+      "sequelize": "^6.7.0"
     },
     "devDependencies": {
       "nodemon": "^2.0.13"
