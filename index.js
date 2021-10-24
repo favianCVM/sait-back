@@ -8,7 +8,7 @@ dotenv.config()
  * ENVS
  */
 const app = express();
-const PORT = process.env.APP_PORT || 8000;
+const PORT = process.env.PORT || 8000;
 
 /**
  * MIDDLEWARES
