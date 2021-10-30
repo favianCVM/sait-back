@@ -1,5 +1,6 @@
 const { handleError } = require('../utils');
 const jwt = require('express-jwt');
+const {ALL} = require('./roles')
 
 function authorize(roles = []) {
   // roles param can be a single role string (e.g. Role.User or 'User') 
@@ -15,6 +16,10 @@ function authorize(roles = []) {
 
       // authorize based on user role
       (req, res, next) => {
+          req.user = req.user?.data
+
+          if(roles.includes(ALL)) return next()
+
           if (roles.length && (!roles.includes(req.user.role) || !req.user.role)) {
               // user's role is not authorized
               return handleError({

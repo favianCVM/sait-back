@@ -8,7 +8,7 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 
-let sequelize = new Sequelize(process.env.DB_URL)
+const sequelize = new Sequelize(process.env.DB_URL, { omitNull: true })
 
 fs
   .readdirSync(__dirname)

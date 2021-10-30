@@ -1,53 +1,45 @@
-const models = require('../../models');
-const bcryptjs = require('bcryptjs');
-const { createJWToken } = require('../../libs/auth')
+const models = require("../../models");
+const bcryptjs = require("bcryptjs");
+const { createJWToken } = require("../../libs/auth");
 
 module.exports = (req, res) => {
-  return new Promise((resolve, reject)=>{
-    models.profiles.findOne({ where: {
-      email: req.body.email,
-      password: req.body.password,
-    }})
-      .then((user)=>{
-        if(user === null){
-          res.status(400).json({
-            message: 'Credenciales invalidas.',
-          })
-        } else {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await models.profiles.findOne({
+        where: {
+          email: req.body.email,
+        },
+      });
 
-          //COMMENT THIST TO WORK WITH ENCRYPTED PASSWORDS
-          let token = createJWToken({
-            sessionData: {
-              ...user
-            }
-          }) 
+      if (!user)
+        return res.status(400).json({
+          message: "El email no existe.",
+        });
 
-          return resolve({
-            token,
-            ...user.dataValues
-          })
+      user = user.dataValues;
 
-          bcryptjs.compare(req.body.password, user.password, (err, res) => {
-            if(res){
-              let token = createJWToken({
-                sessionData: {
-                  ...user
-                }
-              }) 
+      let passwordValid = await bcryptjs.compare(
+        req.body.password,
+        user.password
+      );
 
-              return resolve({
-                token,
-                ...user
-              })
-            } else {
-              return reject(err)
-            }
-          })
-        }
-      })
-      .catch((err)=>{
-        return reject(err)
-      })
+      if (!passwordValid)
+        return res.status(400).json({
+          message: "Credenciales invalidas.",
+        });
 
-  })
-}
+      let token = createJWToken({
+        sessionData: {
+          ...user,
+        },
+      });
+
+      return resolve({
+        token,
+        ...user,
+      });
+    } catch (err) {
+      return reject(err);
+    }
+  });
+};
