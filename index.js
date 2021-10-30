@@ -31,17 +31,18 @@ app.use(routes);
 const db = require('./connection')
 
 const start = () => {
-  db.connect((err)=>{
+  db.connect(async (err)=>{
     if(err) throw err;
 
-    db.query(require('./utils/createTables'), (err) => {
-      if(err)throw err;
-      
+    let initialQuery = await require('./utils/createTables')()
 
+    db.query(initialQuery, (err) => {
+      if(err) throw err;
+
+      console.log("------Data base created ::::")
       app.listen(PORT, (err) => {
-        if(err){
-          throw err;
-        }
+        if(err) throw err;
+
         console.log(`------Server is up on localhost:${PORT}`);
   
         module.exports = app
