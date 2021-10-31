@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { handleError } = require("../utils/index");
-const { create_profile, login_profile } = require('../handlers/profile/index')
+const { create_profile, login_profile, get_profiles, update_profile } = require('../handlers/profile/index')
 const {
   ALL,
   ADMIN,
@@ -38,16 +38,16 @@ app.post(
   require(AUTH)([ADMIN]),
   async (req, res) => {
     try {
-      let profile_created = await create_profile(req)
+      let created_profile = await create_profile(req)
 
-      if(profile_created instanceof Error){
+      if(created_profile instanceof Error){
         return handleError({
-          status:  profile_created.status || 500,
-          message: profile_created.message || 'Hubo un error al crear el perfil'
+          status:  created_profile.status || 500,
+          message: created_profile.message || 'Hubo un error al crear el perfil'
         },{},res)
       }
       
-      return res.status(200).json(profile_created)
+      return res.status(200).json(created_profile)
     } catch (err) {
 
       return handleError({
@@ -58,6 +58,59 @@ app.post(
     }
   }
 )
+
+
+app.get(
+  '/get-all-profiles',
+  require(AUTH)([ALL]),
+  async (req, res) => {
+    try {
+      let profiles = await get_profiles(req)
+
+      if(profiles instanceof Error){
+        return handleError({
+          status: profiles.status || 400,
+          message: 'Error al obtener los perfiles.'
+        },{},res)
+      }
+      
+      return res.status(200).json(profiles)
+    } catch (err) {
+      return handleError({
+        status: err.status || 500,
+        message: err.message || 'Error al login.',
+        errorDetail: err.message,
+      },{},res)
+    }
+  }
+)
+
+
+app.put(
+  '/update-profile/:id',
+  require(AUTH)([ADMIN]),
+  async (req, res) => {
+    try {
+      let updated_profile = await update_profile(req)
+
+      if(updated_profile instanceof Error){
+        return handleError({
+          status: update_profile.status || 400,
+          message: 'Error al actualizar el perfil.'
+        },{},res)
+      }
+      
+      return res.status(200).json(updated_profile)
+    } catch (err) {
+      return handleError({
+        status: err.status || 500,
+        message: err.message || 'Error al actualizar el perfil.',
+        errorDetail: err.message,
+      },{},res)
+    }
+  }
+)
+
 
 module.exports = app
 

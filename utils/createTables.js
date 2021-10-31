@@ -30,9 +30,9 @@ const init = async () => {
     birth_date DATE NOT NULL
   );
   
-  INSERT INTO profiles (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('admin', 'admin', 'admin@admin.com', '${hashedAdminPass}', 'f', '11111111111', '60', '10/10/2020');
+  INSERT INTO profiles (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('admin', 'admin', 'admin@admin.com', '${hashedAdminPass}', 'F', '11111111111', '60', '1995-12-17T03:24:00');
   
-  INSERT INTO profiles (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('user', 'user', 'user@user.com', '${hashedUserPass}', 'f', '11111111111', '50', '10/10/2020');
+  INSERT INTO profiles (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('user', 'user', 'user@user.com', '${hashedUserPass}', 'F', '11111111111', '50', '1995-12-17T03:24:00');
   `
 }
 
