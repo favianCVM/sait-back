@@ -1,10 +1,9 @@
 const { Router } = require('express')
 const { handleError } = require("../utils/index");
-const { create_profile, login_profile, get_profiles, update_profile } = require('../handlers/profile/index')
+const { create_profile, login_profile, get_profiles, update_profile, delete_profile } = require('../handlers/profile/index')
 const {
   ALL,
   ADMIN,
-  USER
 } = require('../auth/roles')
 const AUTH = '../auth'
 const app = Router()
@@ -111,6 +110,30 @@ app.put(
   }
 )
 
+app.post(
+  '/delete-profile/:id',
+  require(AUTH)([ADMIN]),
+  async (req, res) => {
+    try {
+      let deleted_profile = await delete_profile(req)
+
+      if(deleted_profile instanceof Error){
+        return handleError({
+          status: deleted_profile.status || 400,
+          message: 'Error al actualizar el perfil.'
+        },{},res)
+      }
+      
+      return res.status(200).json(deleted_profile)
+    } catch (err) {
+      return handleError({
+        status: err.status || 500,
+        message: err.message || 'Error al eliminar el perfil.',
+        errorDetail: err.message,
+      },{},res)
+    }
+  }
+)
 
 module.exports = app
 
