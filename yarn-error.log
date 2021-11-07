@@ -1,20 +1,20 @@
 Arguments: 
-  /usr/bin/node /usr/local/bin/yarn install
+  /usr/local/bin/node /usr/local/bin/yarn install
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
 
 Yarn version: 
-  1.22.15
+  1.22.17
 
 Node version: 
-  10.19.0
+  16.13.0
 
 Platform: 
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/fabian/Desktop/sait-back/node_modules/.bin/nopt'
+  Error: EACCES: permission denied, unlink '/home/fabian/Desktop/sait-back/node_modules/.bin/is-ci'
 
 npm manifest: 
   {
