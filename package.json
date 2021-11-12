@@ -4,11 +4,11 @@
   "description": "backend of SAIT incidence system",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index",
-    "dev.docker": "docker-compose -f docker-compose.dev.yml up",
-    "build.docker": "docker-compose -f docker-compose.dev.yml build --no-cache",
-    "down.docker": "docker-compose -f docker-compose.dev.yml down --remove-orphans",
-    "dev.nodemon": "nodemon --no-warnings -L"
+    "start": "node index",
+    "dev:docker": "docker-compose -f docker-compose.dev.yml up",
+    "build:docker": "docker-compose -f docker-compose.dev.yml build --no-cache",
+    "down:docker": "docker-compose -f docker-compose.dev.yml down --remove-orphans",
+    "dev:nodemon": "nodemon --no-warnings -L"
   },
   "author": "",
   "license": "ISC",

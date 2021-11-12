@@ -19,4 +19,4 @@ COPY . .
 
 # Exports
 EXPOSE 4000
-CMD [ "npm", "run", "dev.nodemon" ]
+CMD [ "npm", "run", "dev:nodemon" ]
