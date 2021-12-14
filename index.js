@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const dotenv = require('dotenv')
+const formidable = require('express-formidable')
 
 dotenv.config()
 /**
@@ -16,7 +17,7 @@ const PORT = process.env.PORT || 8000;
 app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
-
+app.use(formidable())
 /**
  * ROUTES
  */

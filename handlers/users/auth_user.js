@@ -5,9 +5,9 @@ const { createJWToken } = require("../../libs/auth");
 module.exports = (req, res) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let user = await models.profiles.findOne({
+      let user = await models.users.findOne({
         where: {
-          email: req.body.email,
+          email: req.fields.email,
         },
       });
 
@@ -19,7 +19,7 @@ module.exports = (req, res) => {
       user = user.dataValues;
 
       let passwordValid = await bcryptjs.compare(
-        req.body.password,
+        req.fields.password,
         user.password
       );
 

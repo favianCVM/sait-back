@@ -1,12 +1,13 @@
 const models = require('../../models');
 const bcrypt = require('bcryptjs');
+const { uploadImage } = require('../../utils/imageHandler')
 
 module.exports = async (req) => {
   const data = req.body;
 
   return new Promise(async (resolve, reject) => {
     try {
-      let usedDni = await models.profiles.findOne({
+      let usedDni = await models.users.findOne({
         where:{
           dni: data.dni,
         } 
@@ -14,7 +15,7 @@ module.exports = async (req) => {
   
       if(usedDni) return reject({status: 400 , message: 'Este dni se encuentra en uso.'})
   
-      let usedEmail = await models.profiles.findOne({
+      let usedEmail = await models.users.findOne({
         where:{
           email: data.email,
         } 
@@ -27,9 +28,9 @@ module.exports = async (req) => {
     
       data.password = hashedPass
     
-      let created_profile = await models.profiles.create({...data})
+      let created_user = await models.users.create({...data})
       
-      return resolve(created_profile)
+      return resolve(created_user)
       
     } catch (err ) {
       return reject(err)
