@@ -3,7 +3,8 @@ const bcrypt = require('bcryptjs');
 const { uploadImage } = require('../../utils/imageHandler')
 
 module.exports = async (req) => {
-  const data = req.body;
+  const data = req.fields;
+  console.log('form data =>>>>', data)
 
   return new Promise(async (resolve, reject) => {
     try {
@@ -28,8 +29,13 @@ module.exports = async (req) => {
     
       data.password = hashedPass
     
-      let created_user = await models.users.create({...data})
+      if(data.image) await uploadImage({
+        folder: process.env.CLOUDINARY_USERS_FOLDER,
+        picture: data.image,
+      })
       
+      let created_user = await models.users.create({...data})
+
       return resolve(created_user)
       
     } catch (err ) {

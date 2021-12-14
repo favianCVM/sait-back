@@ -26,6 +26,7 @@ const init = async () => {
     password VARCHAR(1000) NOT NULL,
     sex VARCHAR(45) NOT NULL,
     dni VARCHAR(45) NOT NULL,
+    image VARCHAR(200),
     role INT NOT NULL,
     birth_date DATE NOT NULL
   );

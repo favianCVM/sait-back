@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     dni: DataTypes.STRING,
     role: DataTypes.NUMBER,
     birth_date: DataTypes.DATE,
+    image: DataTypes.STRING,
   }, {
     timestamps: false
   });
