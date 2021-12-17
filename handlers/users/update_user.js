@@ -1,18 +1,35 @@
-const models = require('../../models');
+const models = require("../../models");
+const {uploadImage} = require("../../utils/imageHandler")
 
 module.exports = (req) => {
+  const { files, fields: data } = req;
   return new Promise(async (resolve, reject) => {
     try {
-      let update_user = await models.users.update({ ...req.body }, {
+
+      let imageRes;
+      if (files.profile_picture) {
+        imageRes = await uploadImage({
+          folder: process.env.CLOUDINARY_USERS_FOLDER,
+          picture: files.profile_picture,
+        });
+        data.profile_picture = imageRes.secure_url;
+        data.profile_picture_id = imageRes.public_id;
+      }
+
+      console.log("LADATAACTUALIZADA", data)
+
+      let update_user = await models.users.update(
+        { ...data },
+        {
           where: {
             id: req.params.id,
-          }
-        });
+          },
+        }
+      );
 
-      return resolve(update_user)
-
+      return resolve(update_user);
     } catch (err) {
-      return reject(err)
+      return reject(err);
     }
-  })
-}
+  });
+};
