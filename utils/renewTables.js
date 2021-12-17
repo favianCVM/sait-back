@@ -6,12 +6,12 @@ module.exports = `
 SET FOREIGN_KEY_CHECKS=0; -- to disable them
 
 -- -----------------------------------------------------
--- Table profiles
+-- Table users
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS profiles;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE IF NOT EXISTS profiles (
+CREATE TABLE IF NOT EXISTS users (
   id INT NOT NULL,
   name VARCHAR(45) NOT NULL,
   last_name VARCHAR(45) NOT NULL,
@@ -130,17 +130,17 @@ DROP TABLE IF EXISTS devices ;
 
 CREATE TABLE IF NOT EXISTS devices (
   id INT NOT NULL,
-  id_profile INT NOT NULL,
+  id_user INT NOT NULL,
   id_device_type INT NOT NULL,
   device_number VARCHAR(45) NOT NULL,
   PRIMARY KEY (id),
   createdAt DATE NOT NULL,
   updatedAt DATE NOT NULL,
-  INDEX fk_device_profile1_idx (id_profile ASC) ,
+  INDEX fk_device_user1_idx (id_user ASC) ,
   INDEX fk_device_device_type1_idx (id_device_type ASC) , 
-  CONSTRAINT fk_device_profile1
-    FOREIGN KEY (id_profile)
-    REFERENCES profiles (id)
+  CONSTRAINT fk_device_user1
+    FOREIGN KEY (id_user)
+    REFERENCES users (id)
     on delete cascade
     on update cascade,
   CONSTRAINT fk_device_device_type1
@@ -208,27 +208,27 @@ CREATE TABLE IF NOT EXISTS incidence_issue (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table profile_incidence
+-- Table user_incidence
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS profile_incidence ;
+DROP TABLE IF EXISTS user_incidence ;
 
 
-CREATE TABLE IF NOT EXISTS profile_incidence (
+CREATE TABLE IF NOT EXISTS user_incidence (
   id INT NOT NULL,
-  id_profile INT NOT NULL,
+  id_user INT NOT NULL,
   id_incidence INT NOT NULL,
   PRIMARY KEY (id),
   createdAt DATE NOT NULL,
   updatedAt DATE NOT NULL,
-  INDEX fk_profile_incidence_profile1_idx (id_profile ASC) ,
-  INDEX fk_profile_incidence_incidence1_idx (id_incidence ASC) ,
-  CONSTRAINT fk_profile_incidence_profile1
-    FOREIGN KEY (id_profile)
-    REFERENCES profiles (id)
+  INDEX fk_user_incidence_user1_idx (id_user ASC) ,
+  INDEX fk_user_incidence_incidence1_idx (id_incidence ASC) ,
+  CONSTRAINT fk_user_incidence_user1
+    FOREIGN KEY (id_user)
+    REFERENCES users (id)
     on delete cascade
     on update cascade,
-  CONSTRAINT fk_profile_incidence_incidence1
+  CONSTRAINT fk_user_incidence_incidence1
     FOREIGN KEY (id_incidence)
     REFERENCES incidences (id)
     on delete cascade
@@ -272,19 +272,19 @@ DROP TABLE IF EXISTS technicians ;
 
 CREATE TABLE IF NOT EXISTS technicians (
   id INT NOT NULL,
-  id_profile INT NOT NULL,
+  id_user INT NOT NULL,
   PRIMARY KEY (id),
   createdAt DATE NOT NULL,
   updatedAt DATE NOT NULL,
-  INDEX fk_technician_profile1_idx (id_profile ASC) ,
-  CONSTRAINT fk_technician_profile1
-    FOREIGN KEY (id_profile)
-    REFERENCES profiles (id)
+  INDEX fk_technician_user1_idx (id_user ASC) ,
+  CONSTRAINT fk_technician_user1
+    FOREIGN KEY (id_user)
+    REFERENCES users (id)
     on delete cascade
     on update cascade)
 ENGINE = InnoDB; 
 
-INSERT INTO profiles (id, name, last_name, email, password, sex, dni, role, birth_date, createdAt, updatedAt) VALUES ('0', 'admin', 'admin', 'admin@admin.com', 'admin', 'f', '11111111111', '60', '10/10/2020', '2021-10-04', '2021-10-12');
+INSERT INTO users (id, name, last_name, email, password, sex, dni, role, birth_date, createdAt, updatedAt) VALUES ('0', 'admin', 'admin', 'admin@admin.com', 'admin', 'f', '11111111111', '60', '10/10/2020', '2021-10-04', '2021-10-12');
 
 SET FOREIGN_KEY_CHECKS=1; -- to re-enable them
 

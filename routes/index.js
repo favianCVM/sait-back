@@ -1,9 +1,9 @@
 const {Router} = require('express')
 const app = Router()
 
-const profiles = require('./profiles')
+const users = require('./users')
 
 
-app.use('/profile', profiles)
+app.use('/users', users)
 
 module.exports = app
