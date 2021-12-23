@@ -16,8 +16,6 @@ module.exports = (req) => {
         data.profile_picture_id = imageRes.public_id;
       }
 
-      console.log("LADATAACTUALIZADA", data)
-
       let update_user = await models.users.update(
         { ...data },
         {
@@ -27,7 +25,7 @@ module.exports = (req) => {
         }
       );
 
-      return resolve(update_user);
+      return resolve({update_user, profile_picture_url: imageRes?.secure_url || null});
     } catch (err) {
       return reject(err);
     }
