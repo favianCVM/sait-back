@@ -33,16 +33,16 @@ const db = require('./connection')
 
 const start = () => {
   db.connect(async (err)=>{
-    if(err) throw err;
+    if(err) setTimeout(start, 5000)
 
     let initialQuery = await require('./utils/createTables')()
 
     db.query(initialQuery, (err) => {
-      if(err) throw err;
+      if(err) setTimeout(start, 5000)
 
       console.log("------Data base created ::::")
       app.listen(PORT, (err) => {
-        if(err) throw err;
+        if(err) setTimeout(start, 5000)
 
         console.log(`------Server is up on localhost:${PORT}`);
   
