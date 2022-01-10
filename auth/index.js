@@ -17,6 +17,7 @@ function authorize(roles = []) {
       // authorize based on user role
       (req, res, next) => {
           req.user = req.user?.data
+          req.user.role = JSON.parse(req.user.role)
 
           if(roles.includes(ALL)) return next()
 
