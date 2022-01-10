@@ -35,20 +35,20 @@ const start = () => {
   db.connect(async (err)=>{
     if(err) setTimeout(start, 5000)
 
-    let initialQuery = await require('./utils/createTables')()
+    // try {
+    //   await require('./utils/initializeUsers')()
+    // } catch (error) {
+    //   setTimeout(start, 5000)
+    // }
 
-    db.query(initialQuery, (err) => {
+    app.listen(PORT, (err) => {
       if(err) setTimeout(start, 5000)
 
-      console.log("------Data base created ::::")
-      app.listen(PORT, (err) => {
-        if(err) setTimeout(start, 5000)
+      console.log(`------Server is up on localhost:${PORT}`);
 
-        console.log(`------Server is up on localhost:${PORT}`);
+      module.exports = app
+    });
   
-        module.exports = app
-      });
-    })
   })
 }
 

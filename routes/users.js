@@ -128,7 +128,7 @@ app.put("/update-user/:id", require(AUTH)([ADMIN]), async (req, res) => {
   }
 });
 
-app.post("/delete-user/:id", require(AUTH)([ADMIN]), async (req, res) => {
+app.delete("/delete-user/:id", require(AUTH)([ADMIN]), async (req, res) => {
   try {
     let deleted_user = await delete_user(req);
 
@@ -136,7 +136,7 @@ app.post("/delete-user/:id", require(AUTH)([ADMIN]), async (req, res) => {
       return handleError(
         {
           status: deleted_user.status || 400,
-          message: "Error al actualizar el perfil.",
+          message: "Error al eliminar el perfil.",
         },
         {},
         res
