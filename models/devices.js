@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   devices.associate = function(models) {
     // associations can be defined here
     models.devices.belongsTo(models.users, {
-      // as: 'users', //this is not necessary 
+      // as: 'users', 
       through: {model: devices},
       targetKey: 'id',
       foreignKey: 'user_id' 
