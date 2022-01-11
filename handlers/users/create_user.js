@@ -45,8 +45,14 @@ module.exports = async (req) => {
         data.profile_picture = imageRes.secure_url;
         data.profile_picture_id = imageRes.public_id;
       }
-
+     
       let created_user = await models.users.create({ ...data });
+
+      if(JSON.parse(data.role) === 55){
+        let created_technician = models.technicians.create({
+          user_id: created_user.dataValues.id
+        })
+      }
 
       return resolve(created_user);
     } catch (err) {
