@@ -1,11 +1,4 @@
-const bcrypt = require('bcryptjs');
-
 const init = async () => {
-  
-  let salt = await bcrypt.genSalt(15);
-  
-  let hashedAdminPass = await bcrypt.hash('admin', salt);
-  let hashedUserPass = await bcrypt.hash('user', salt);
 
   return `
 
@@ -119,7 +112,7 @@ const init = async () => {
   ALTER TABLE "device_component" ADD CONSTRAINT "device_component_component_id" FOREIGN KEY ("component_id") REFERENCES "components" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
   ALTER TABLE "device_error" ADD CONSTRAINT "device_error_device_id" FOREIGN KEY ("device_id") REFERENCES "devices" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
   ALTER TABLE "device_error" ADD CONSTRAINT "device_error_error_id" FOREIGN KEY ("error_id") REFERENCES "errors" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
-  ALTER TABLE "devices" ADD CONSTRAINT "user_id" FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+  ALTER TABLE "devices" ADD CONSTRAINT "user_id" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
   ALTER TABLE "incidence_error" ADD CONSTRAINT "incidence_error_error_id" FOREIGN KEY ("error_id") REFERENCES "errors" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
   ALTER TABLE "incidence_error" ADD CONSTRAINT "incidence_error_incidence_id" FOREIGN KEY ("incidence_id") REFERENCES "incidences" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
   ALTER TABLE "incidences" ADD CONSTRAINT "incidence_type_id" FOREIGN KEY ("type_id") REFERENCES "types" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -128,10 +121,6 @@ const init = async () => {
   ALTER TABLE "technicians" ADD CONSTRAINT "technician_user_id" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
   ALTER TABLE "user_incidence" ADD CONSTRAINT "user_incidence_user_id" FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
   ALTER TABLE "user_incidence" ADD CONSTRAINT "user_incidence_incidence_id" FOREIGN KEY ("incidence_id") REFERENCES "incidences" ("id") ON DELETE CASCADE ON UPDATE CASCADE DEFERRABLE;  
-  
-  INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('admin', 'admin', 'admin@admin.com', '${hashedAdminPass}', 'F', '11111111111', '60', '1995-12-17T03:24:00');
-  
-  INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('user', 'user', 'user@user.com', '${hashedUserPass}', 'F', '11111111111', '50', '1995-12-17T03:24:00');
   `
 }
 

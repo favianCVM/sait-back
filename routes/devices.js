@@ -11,7 +11,7 @@ const AUTH = "../auth";
 const app = Router();
 
 
-app.post("/create-device", async (req, res) => {
+app.post("/create-device", require(AUTH)([ADMIN]), async (req, res) => {
   try {
     let device_created = await create_device(req, res);
 
@@ -69,7 +69,7 @@ app.put("/update-device/:id", require(AUTH)([ADMIN]), async (req, res) => {
   }
 });
 
-app.get("/get-all-devices", async (req, res) => {
+app.get("/get-all-devices", require(AUTH)([ADMIN]), async (req, res) => {
   try {
     let devices = await get_devices(req, res);
 
