@@ -22,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       targetKey: 'id',
       foreignKey: 'user_id' 
     })
+
+    models.devices.hasMany(models.deviceComponent)
   };
   return devices;
 };
