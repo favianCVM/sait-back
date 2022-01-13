@@ -17,7 +17,6 @@ module.exports = (req, res) => {
         created_type = await models.types.create({
           ...JSON.parse(data.type),
         });
-        console.log(created_type);
         data.type_id = created_type.dataValues.id;
       }
 
