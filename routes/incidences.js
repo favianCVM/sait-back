@@ -1,6 +1,10 @@
 const { Router } = require("express");
 const { handleError } = require("../utils/index");
-const { create_incidence, get_incidence_types } = require("../handlers/incidences");
+const {
+  create_incidence,
+  get_incidence_types,
+  get_all_incidences,
+} = require("../handlers/incidences");
 const { ALL, ADMIN, TECHNICIAN, USER } = require("../auth/roles");
 const AUTH = "../auth";
 const app = Router();
@@ -34,7 +38,6 @@ app.post("/create-incidence", require(AUTH)([ADMIN, ALL]), async (req, res) => {
   }
 });
 
-
 app.get("/incidence-types", require(AUTH)([ADMIN, ALL]), async (req, res) => {
   try {
     let incidence_types = await get_incidence_types(req, res);
@@ -56,6 +59,35 @@ app.get("/incidence-types", require(AUTH)([ADMIN, ALL]), async (req, res) => {
       {
         status: err.status || 500,
         message: err.message || "Error al obtener los tipos de incidencias.",
+        errorDetail: err.message,
+      },
+      {},
+      res
+    );
+  }
+});
+
+app.get("/get-all-incidences", require(AUTH)([ADMIN]), async (req, res) => {
+  try {
+    let incidences = await get_all_incidences(req, res);
+
+    if (incidences instanceof Error) {
+      return handleError(
+        {
+          status: incidence_types.status || 400,
+          message: "Error al obtener las incidencias.",
+        },
+        {},
+        res
+      );
+    }
+
+    return res.status(200).json(incidences);
+  } catch (err) {
+    return handleError(
+      {
+        status: err.status || 500,
+        message: err.message || "Error al obtener las incidencias.",
         errorDetail: err.message,
       },
       {},

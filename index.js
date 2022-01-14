@@ -1,10 +1,10 @@
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
-const dotenv = require('dotenv')
-const formidable = require('express-formidable')
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const formidable = require("express-formidable");
 
-dotenv.config()
+dotenv.config();
 /**
  * ENVS
  */
@@ -17,11 +17,11 @@ const PORT = process.env.PORT || 8000;
 app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
-app.use(formidable())
+app.use(formidable());
 /**
  * ROUTES
  */
-const routes = require('./routes');
+const routes = require("./routes");
 
 app.use(routes);
 
@@ -29,11 +29,11 @@ app.use(routes);
  * SERVER INIT
  */
 
-const db = require('./connection')
+const db = require("./connection");
 
 const start = () => {
-  db.connect(async (err)=>{
-    if(err) setTimeout(start, 5000)
+  db.connect(async (err) => {
+    if (err) throw err;
 
     // try {
     //   await require('./utils/initializeUsers')()
@@ -42,15 +42,13 @@ const start = () => {
     // }
 
     app.listen(PORT, (err) => {
-      if(err) setTimeout(start, 5000)
+      if (err) throw err;
 
       console.log(`------Server is up on localhost:${PORT}`);
 
-      module.exports = app
+      module.exports = app;
     });
-  
-  })
-}
+  });
+};
 
-start()
-
+start();

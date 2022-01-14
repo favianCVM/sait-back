@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       targetKey: "id",
       foreignKey: "type_id",
     });
+
+    models.incidences.hasMany(models.incidenceError)
+    models.incidences.hasMany(models.userIncidence)
+
   };
   return incidences;
 };
