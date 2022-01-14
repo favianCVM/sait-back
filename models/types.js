@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   types.associate = function (models) {
     // associations can be defined here
     // models.types.hasOne(models.devices)
+    models.types.hasMany(models.incidences)
   };
   return types;
 };
