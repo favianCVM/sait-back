@@ -1,9 +1,9 @@
+require("express-async-errors");
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const formidable = require("express-formidable");
-
 dotenv.config();
 /**
  * ENVS
@@ -32,23 +32,24 @@ app.use(routes);
 const db = require("./connection");
 
 const start = () => {
-  db.connect(async (err) => {
+  app.listen(PORT, (err) => {
     if (err) throw err;
 
-    // try {
-    //   await require('./utils/initializeUsers')()
-    // } catch (error) {
-    //   setTimeout(start, 5000)
-    // }
+    console.log(`------Server is up on localhost:${PORT}`);
 
-    app.listen(PORT, (err) => {
-      if (err) throw err;
-
-      console.log(`------Server is up on localhost:${PORT}`);
-
-      module.exports = app;
-    });
+    module.exports = app;
   });
+
+  // db.connect(async (err) => {
+  //   if (err) throw err;
+
+  //   // try {
+  //   //   await require('./utils/initializeUsers')()
+  //   // } catch (error) {
+  //   //   setTimeout(start, 5000)
+  //   // }
+
+  // });
 };
 
 start();

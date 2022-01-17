@@ -11,8 +11,10 @@ module.exports = (req, res) => {
 
       let created_type,
         created_incidence,
-        created_userIncidence = {};
+        created_userIncidence,
+        created_deviceIncidence = {};
 
+      // if the incidence type is new it create it
       if (data.type_id === "new") {
         created_type = await models.types.create({
           ...JSON.parse(data.type),
@@ -20,21 +22,25 @@ module.exports = (req, res) => {
         data.type_id = created_type.dataValues.id;
       }
 
+      // created incidence
       created_incidence = await models.incidences.create({
         description: data.description,
         type_id: data.type_id,
       });
 
+      // user-incidence relation
       created_userIncidence = await models.userIncidence.create({
         user_id: data.user_id,
         incidence_id: created_incidence.dataValues.id,
       });
 
+      // if there's errors it creates
       if (JSON.parse(data.errors).length) {
         created_errors = await models.errors.bulkCreate(
           JSON.parse(data.errors)
         );
 
+        // incidence-error relation
         created_incidenceErrors = await models.incidenceError.bulkCreate(
           created_errors.map((el) => ({
             incidence_id: created_incidence.dataValues.id,
@@ -42,6 +48,12 @@ module.exports = (req, res) => {
           }))
         );
       }
+
+      // device-incidence relation
+      created_deviceIncidence = await models.deviceIncidence.create({
+        device_id: data.device_id,
+        incidence_id: created_incidence.dataValues.id,
+      });
 
       return resolve({
         ...created_incidence,

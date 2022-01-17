@@ -67,7 +67,7 @@ app.get("/incidence-types", require(AUTH)([ADMIN, ALL]), async (req, res) => {
   }
 });
 
-app.get("/get-all-incidences", require(AUTH)([ADMIN]), async (req, res) => {
+app.get("/get-all-incidences", require(AUTH)([ADMIN, TECHNICIAN]), async (req, res) => {
   try {
     let incidences = await get_all_incidences(req, res);
 
