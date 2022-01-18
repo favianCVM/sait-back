@@ -21,9 +21,9 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "type_id",
     });
 
-    models.incidences.hasMany(models.incidenceError)
-    models.incidences.hasMany(models.userIncidence)
-
+    models.incidences.hasMany(models.incidenceError);
+    models.incidences.hasMany(models.userIncidence);
+    models.incidences.hasMany(models.deviceIncidence);
   };
   return incidences;
 };
