@@ -1,22 +1,25 @@
-const models = require('../../models');
+const models = require("../../models");
 
 module.exports = (req) => {
-
-  return new Promise( async (resolve, reject)=>{
+  return new Promise(async (resolve, reject) => {
     try {
-      let users = await models.users.findAll()
+      let users = await models.users.findAll({
+        include: [
+          {
+            model: models.devices,
+          },
+        ],
+      });
 
-      
-      users = users.map((userData)=> {
-        delete userData.dataValues.password
+      users = users.map((userData) => {
+        delete userData.dataValues.password;
 
-        return {...userData.dataValues}
-      })
-      
-      return resolve(users)
+        return { ...userData.dataValues };
+      });
 
+      return resolve(users);
     } catch (err) {
-      return reject(err)
+      return reject(err);
     }
-  })
-}
+  });
+};

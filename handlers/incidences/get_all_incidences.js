@@ -6,6 +6,12 @@ module.exports = (req) => {
       let incidences = await models.incidences.findAll({
         include: [
           {
+            model: models.deviceIncidence,
+            include: {
+              model: models.devices,
+            },
+          },
+          {
             model: models.userIncidence,
             required: true,
             include: [
@@ -17,11 +23,9 @@ module.exports = (req) => {
           },
           {
             model: models.incidenceError,
-            required: true,
             include: [
               {
                 model: models.errors,
-                required: true,
               },
             ],
           },
@@ -34,7 +38,15 @@ module.exports = (req) => {
 
       let output = incidences.map((el) => {
         el = el.dataValues;
-        el.user = el.userIncidences[0].user.dataValues;
+        el.user = el.userIncidences[0]?.user?.dataValues || {};
+        el.device = el.deviceIncidences[0]?.device?.dataValues || {};
+        el.errors = el.incidenceErrors.map((il) => ({
+          ...il.error.dataValues,
+          priority: JSON.parse(il.error.priority),
+        }));
+        delete el.incidenceErrors;
+        delete el.deviceIncidences;
+        delete el.userIncidences;
         delete el.user.password;
 
         return el;

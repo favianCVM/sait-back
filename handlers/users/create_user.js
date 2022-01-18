@@ -48,7 +48,7 @@ module.exports = async (req) => {
      
       let created_user = await models.users.create({ ...data });
 
-      if(JSON.parse(data.role) === 55){
+      if(JSON.parse(data.role) === 55 || data.role === "55"){
         let created_technician = models.technicians.create({
           user_id: created_user.dataValues.id
         })
