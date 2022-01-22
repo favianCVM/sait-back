@@ -5,11 +5,11 @@ const {
   get_devices,
   update_device,
   delete_device,
+  get_device_types,
 } = require("../handlers/devices/index");
 const { ALL, ADMIN, TECHNICIAN } = require("../auth/roles");
 const AUTH = "../auth";
 const app = Router();
-
 
 app.post("/create-device", require(AUTH)([ADMIN]), async (req, res) => {
   try {
@@ -38,7 +38,7 @@ app.post("/create-device", require(AUTH)([ADMIN]), async (req, res) => {
       res
     );
   }
-})
+});
 
 app.put("/update-device/:id", require(AUTH)([ADMIN]), async (req, res) => {
   try {
@@ -96,8 +96,36 @@ app.get("/get-all-devices", require(AUTH)([ADMIN]), async (req, res) => {
       res
     );
   }
-})
+});
 
+app.get("/get-all-device-types", require(AUTH)([ADMIN]), async (req, res) => {
+  try {
+    let device_types = await get_device_types(req, res);
+
+    if (device_types instanceof Error) {
+      return handleError(
+        {
+          status: device_types.status || 400,
+          message: "Error al obtener los equipos.",
+        },
+        {},
+        res
+      );
+    }
+
+    return res.status(200).json(device_types);
+  } catch (err) {
+    return handleError(
+      {
+        status: err.status || 500,
+        message: err.message || "Error al obtener los equipos.",
+        errorDetail: err.message,
+      },
+      {},
+      res
+    );
+  }
+});
 
 app.delete("/delete-device/:id", require(AUTH)([ADMIN]), async (req, res) => {
   try {
@@ -128,4 +156,4 @@ app.delete("/delete-device/:id", require(AUTH)([ADMIN]), async (req, res) => {
   }
 });
 
-module.exports = app
+module.exports = app;

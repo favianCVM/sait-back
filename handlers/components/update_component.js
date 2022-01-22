@@ -12,7 +12,7 @@ module.exports = (req) => {
           picture: files.picture,
         });
         data.picture = imageRes.secure_url;
-        data.picture_id = imageRes.public_id;
+        data.pictureId = imageRes.public_id;
       }
 
       let updated_component = await models.components.update(

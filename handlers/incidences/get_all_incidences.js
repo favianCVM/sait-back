@@ -12,14 +12,8 @@ module.exports = (req) => {
             },
           },
           {
-            model: models.userIncidence,
+            model: models.users,
             required: true,
-            include: [
-              {
-                model: models.users,
-                required: true,
-              },
-            ],
           },
           {
             model: models.incidenceError,
@@ -29,30 +23,20 @@ module.exports = (req) => {
               },
             ],
           },
-          {
-            model: models.types,
-            required: true,
-          },
         ],
       });
 
-      let output = incidences.map((el) => {
-        el = el.dataValues;
-        el.user = el.userIncidences[0]?.user?.dataValues || {};
-        el.device = el.deviceIncidences[0]?.device?.dataValues || {};
-        el.errors = el.incidenceErrors.map((il) => ({
-          ...il.error.dataValues,
-          priority: JSON.parse(il.error.priority),
-        }));
-        delete el.incidenceErrors;
-        delete el.deviceIncidences;
-        delete el.userIncidences;
-        delete el.user.password;
+      // let output = incidences.map((el) => {
+      //   el = el.dataValues;
+      //   el.device = el.deviceIncidences[0]?.device?.dataValues || {};
+      //   el.errors = el.incidenceErrors.map((il) => (il.error.dataValues));
+      //   delete el.incidenceErrors;
+      //   delete el.deviceIncidences;
 
-        return el;
-      });
+      //   return el;
+      // });
 
-      return resolve(output);
+      return resolve(incidences);
     } catch (err) {
       return reject(err);
     }

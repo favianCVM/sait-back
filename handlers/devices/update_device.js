@@ -14,6 +14,12 @@ module.exports = (req, res) => {
         }
       );
 
+      if(data.device_type_id === "new"){
+        let created_device_type = models.deviceTypes.create({
+          ...data
+        })
+      }
+
       //1ST: get the deviceComponent table elements
       let deviceComponents = await models.deviceComponent.findAll({
         where: {

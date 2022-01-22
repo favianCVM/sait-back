@@ -1,5 +1,5 @@
-FROM node:16-alpine AS development
-ENV NODE_ENV development
+FROM node:16-alpine
+ENV NODE_ENV=production
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -11,6 +11,8 @@ COPY package.json .
 
 RUN rm -rf node_modules
 RUN npm cache clean --force
+
+RUN npm install -g nodemon
 
 RUN npm install
 

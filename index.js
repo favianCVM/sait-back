@@ -31,8 +31,20 @@ app.use(routes);
 
 const db = require("./connection");
 
-const start = () => {
-  app.listen(PORT, (err) => {
+const start = async () => {
+  db.connect(async (err) => {
+    if (err) throw err;
+
+    console.log("=>>>>>>>>>> db connected");
+
+    try {
+      // await require("./utils/initializeTables")();
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  app.listen(PORT, async (err) => {
     if (err) throw err;
 
     console.log(`------Server is up on localhost:${PORT}`);
@@ -40,15 +52,20 @@ const start = () => {
     module.exports = app;
   });
 
-  // db.connect(async (err) => {
+  // app.listen(PORT, async (err) => {
   //   if (err) throw err;
 
-  //   // try {
-  //   //   await require('./utils/initializeUsers')()
-  //   // } catch (error) {
-  //   //   setTimeout(start, 5000)
-  //   // }
+  //   try {
+  //     await require('./utils/initializeUsers')()
+  //   } catch (error) {
+  //     setTimeout(start, 5000)
+  //   }
 
+  //   console.log("=>>>>>>>>>>> node env", process.env.NODE_ENV);
+
+  //   console.log(`------Server is up on localhost:${PORT}`);
+
+  //   module.exports = app;
   // });
 };
 

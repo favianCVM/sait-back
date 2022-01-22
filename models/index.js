@@ -3,16 +3,29 @@ const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
-const db = {};
 const dotenv = require("dotenv");
-
 dotenv.config();
 
-const sequelize = new Sequelize(process.env.DB_URL, {
-  omitNull: true,
-  underscored: true,
-  underscoredAll: true,
-});
+const db = {};
+const { PGUSER, PGPASSWORD, PGPORT, PGHOST, DB_URL, PGDATABASE } = process.env;
+
+var sequelize;
+
+if (process.env.NODE_ENV === "production")
+  sequelize = new Sequelize(DB_URL, {
+    omitNull: true,
+    underscored: true,
+    underscoredAll: true,
+  });
+else if (process.env.NODE_ENV === "development")
+  sequelize = new Sequelize(
+    `postgres://${PGUSER}:${PGPASSWORD}@localhost:${PGPORT}:${PGDATABASE}`,
+    {
+      omitNull: true,
+      underscored: true,
+      underscoredAll: true,
+    }
+  );
 
 fs.readdirSync(__dirname)
   .filter((file) => {

@@ -5,7 +5,7 @@ module.exports = (req) => {
     try {
       let incidences = await models.userIncidence.findAll({
         where: {
-          user_id: req.user.id,
+          userId: req.user.id,
         },
         include: [
           {
