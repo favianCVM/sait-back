@@ -6,10 +6,8 @@ module.exports = (req) => {
       let incidences = await models.incidences.findAll({
         include: [
           {
-            model: models.deviceIncidence,
-            include: {
-              model: models.devices,
-            },
+            model: models.devices,
+            required: true
           },
           {
             model: models.users,
@@ -25,16 +23,6 @@ module.exports = (req) => {
           },
         ],
       });
-
-      // let output = incidences.map((el) => {
-      //   el = el.dataValues;
-      //   el.device = el.deviceIncidences[0]?.device?.dataValues || {};
-      //   el.errors = el.incidenceErrors.map((il) => (il.error.dataValues));
-      //   delete el.incidenceErrors;
-      //   delete el.deviceIncidences;
-
-      //   return el;
-      // });
 
       return resolve(incidences);
     } catch (err) {

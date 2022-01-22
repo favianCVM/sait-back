@@ -6,11 +6,8 @@ module.exports = (req, res) => {
 
   return new Promise(async (resolve, reject) => {
     try {
-      let created_incidence,
-        created_deviceIncidence = {};
-
       // created incidence
-      created_incidence = await models.incidences.create(data);
+      let created_incidence = await models.incidences.create(data);
 
       // if there's errors it creates
       // if (JSON.parse(data.errors).length) {
@@ -28,10 +25,10 @@ module.exports = (req, res) => {
       // }
 
       // device-incidence relation
-      created_deviceIncidence = await models.deviceIncidence.create({
-        device_id: data.device_id,
-        incidence_id: created_incidence.dataValues.id,
-      });
+      // created_deviceIncidence = await models.deviceIncidence.create({
+      //   device_id: data.device_id,
+      //   incidence_id: created_incidence.dataValues.id,
+      // });
 
       return resolve({
         ...created_incidence,

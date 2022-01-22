@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       incidence_type: DataTypes.STRING,
       user_id: DataTypes.INTEGER,
+      device_id: DataTypes.INTEGER,
       description: DataTypes.STRING,
       location: DataTypes.STRING,
       priority: DataTypes.INTEGER
@@ -26,8 +27,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "user_id",
     });
 
+    models.incidences.belongsTo(models.devices, {
+      // as: 'users', //this is not necessary
+      through: { model: incidences },
+      targetKey: "id",
+      foreignKey: "device_id",
+    });
+
     models.incidences.hasMany(models.incidenceError);
-    models.incidences.hasMany(models.deviceIncidence);
+    models.incidences.hasMany(models.technicianIncidence);
   };
 
   return incidences;

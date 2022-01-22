@@ -11,21 +11,29 @@ const { PGUSER, PGPASSWORD, PGPORT, PGHOST, DB_URL, PGDATABASE } = process.env;
 
 var sequelize;
 
-if (process.env.NODE_ENV === "production")
+if (process.env.NODE_ENV === "development")
+  sequelize = new Sequelize(PGDATABASE, PGUSER, PGPASSWORD, {
+    host: PGHOST,
+    port: PGPORT,
+    dialect: "postgres",
+    logging: false,
+  });
+// else if (process.env.NODE_ENV === "production")
+else
   sequelize = new Sequelize(DB_URL, {
     omitNull: true,
     underscored: true,
     underscoredAll: true,
   });
-else if (process.env.NODE_ENV === "development")
-  sequelize = new Sequelize(
-    `postgres://${PGUSER}:${PGPASSWORD}@localhost:${PGPORT}:${PGDATABASE}`,
-    {
-      omitNull: true,
-      underscored: true,
-      underscoredAll: true,
-    }
-  );
+
+// sequelize = new Sequelize(
+//   `postgres://${PGUSER}:${PGPASSWORD}@localhost:${PGPORT}:${PGDATABASE}`,
+//   {
+//     omitNull: true,
+//     underscored: true,
+//     underscoredAll: true,
+//   }
+// );
 
 fs.readdirSync(__dirname)
   .filter((file) => {

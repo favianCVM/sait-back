@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     models.devices.hasMany(models.deviceComponent);
-    models.devices.hasMany(models.deviceIncidence);
+    models.devices.hasMany(models.incidences);
   };
   return devices;
 };
