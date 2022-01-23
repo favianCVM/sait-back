@@ -4,8 +4,6 @@ const { uploadImage } = require("../../utils/imageHandler");
 module.exports = (req, res) => {
   const { files, fields: data } = req;
 
-  console.log(data);
-
   return new Promise(async (resolve, reject) => {
     const { end_date, errors, technician_id } = data;
     const { id: incidence_id } = req.params;
