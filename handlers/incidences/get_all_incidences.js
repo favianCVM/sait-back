@@ -7,7 +7,13 @@ module.exports = (req) => {
         include: [
           {
             model: models.devices,
-            required: true
+            required: true,
+            include: {
+              model: models.deviceComponent,
+              include: {
+                model: models.components,
+              },
+            },
           },
           {
             model: models.users,
@@ -21,10 +27,33 @@ module.exports = (req) => {
               },
             ],
           },
+          {
+            model: models.technicianIncidence,
+            include: {
+              model: models.technicians,
+              include: {
+                model: models.users,
+              },
+            },
+          },
         ],
       });
 
-      return resolve(incidences);
+      const output = incidences.reduce((acc, item) => {
+        item = item.toJSON();
+        item.technicians = item.technicianIncidences.map((el) => ({
+          ...el.technician,
+        }));
+
+        item.device.components = item.device.deviceComponents.map((el) => ({
+          ...el.component,
+        }));
+
+        acc.push(item);
+        return acc;
+      }, []);
+
+      return resolve(output);
     } catch (err) {
       return reject(err);
     }

@@ -1,15 +1,14 @@
-const models = require('../../models');
+const models = require("../../models");
 
 module.exports = (req) => {
-
-  return new Promise( async (resolve, reject)=>{
+  return new Promise(async (resolve, reject) => {
     try {
-      let types = await models.deviceTypes.findAll()
+      let types = await models.deviceTypes.findAll();
 
-      return resolve(types)
-
+      return resolve(types);
     } catch (err) {
-      return reject(err)
+      console.log(err);
+      return reject(err);
     }
-  })
-}
+  });
+};

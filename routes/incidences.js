@@ -5,6 +5,10 @@ const {
   get_incidence_types,
   get_all_incidences,
   get_incidence,
+  assign_technicians,
+  conclude_incidence,
+  get_user_incidences,
+  update_incidence,
 } = require("../handlers/incidences");
 const { ALL, ADMIN, TECHNICIAN, USER } = require("../auth/roles");
 const AUTH = "../auth";
@@ -129,5 +133,67 @@ app.get("/get-incidence/:id", require(AUTH)([ALL]), async (req, res) => {
     );
   }
 });
+
+app.post("/assign-technicians", require(AUTH)([ADMIN]), async (req, res) => {
+  try {
+    let assigned_technicians = await assign_technicians(req, res);
+
+    if (assigned_technicians instanceof Error) {
+      return handleError(
+        {
+          status: assigned_technicians.status || 400,
+          message: "Error al asignar los técnicos.",
+        },
+        {},
+        res
+      );
+    }
+
+    return res.status(200).json(assigned_technicians);
+  } catch (err) {
+    return handleError(
+      {
+        status: err.status || 500,
+        message: err.message || "Error al asignar los técnicos.",
+        errorDetail: err.message,
+      },
+      {},
+      res
+    );
+  }
+});
+
+app.put(
+  "/update-incidence/:id",
+  require(AUTH)([ALL, ADMIN]),
+  async (req, res) => {
+    try {
+      let changed_incidence = await update_incidence(req, res);
+
+      if (changed_incidence instanceof Error) {
+        return handleError(
+          {
+            status: changed_incidence.status || 400,
+            message: "Error al actualizar la incidencia.",
+          },
+          {},
+          res
+        );
+      }
+
+      return res.status(200).json(changed_incidence);
+    } catch (err) {
+      return handleError(
+        {
+          status: err.status || 500,
+          message: err.message || "Error al actualizar la incidencia.",
+          errorDetail: err.message,
+        },
+        {},
+        res
+      );
+    }
+  }
+);
 
 module.exports = app;

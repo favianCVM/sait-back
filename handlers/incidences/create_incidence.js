@@ -7,7 +7,9 @@ module.exports = (req, res) => {
   return new Promise(async (resolve, reject) => {
     try {
       // created incidence
-      let created_incidence = await models.incidences.create(data);
+      const created_incidence = await models.incidences.create({
+        ...data,
+      });
 
       // if there's errors it creates
       // if (JSON.parse(data.errors).length) {
@@ -34,6 +36,7 @@ module.exports = (req, res) => {
         ...created_incidence,
       });
     } catch (error) {
+      console.error(error);
       return reject(error);
     }
   });

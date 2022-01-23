@@ -21,10 +21,19 @@ module.exports = (req) => {
               },
             },
           },
+          {
+            model: models.technicianIncidence,
+            include: {
+              model: models.technicians,
+              include: {
+                model: models.users,
+              },
+            },
+          },
         ],
       });
 
-      let output = incidence.toJSON();
+      const output = incidence.toJSON();
 
       if (
         Array.isArray(output.device?.deviceComponents) &&
@@ -38,6 +47,17 @@ module.exports = (req) => {
           }
         );
       delete output.device.deviceComponents;
+
+      if (
+        Array.isArray(output.technicianIncidences) &&
+        output.technicianIncidences?.length
+      )
+        output.technicians = incidence.technicianIncidences.map((el) => {
+          return {
+            ...el.technician.toJSON(),
+          };
+        });
+      delete output.technicianIncidences;
 
       return resolve(output);
     } catch (err) {

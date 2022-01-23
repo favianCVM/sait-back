@@ -7,7 +7,7 @@ module.exports = async (req) => {
 
   return new Promise(async (resolve, reject) => {
     try {
-      let usedDni = await models.users.findOne({
+      const usedDni = await models.users.findOne({
         where: {
           dni: data.dni,
         },
@@ -19,7 +19,7 @@ module.exports = async (req) => {
           message: "Este dni se encuentra en uso.",
         });
 
-      let usedEmail = await models.users.findOne({
+      const usedEmail = await models.users.findOne({
         where: {
           email: data.email,
         },
@@ -31,8 +31,8 @@ module.exports = async (req) => {
           message: "Este email se encuentra en uso.",
         });
 
-      let salt = await bcrypt.genSalt(15);
-      let hashedPass = await bcrypt.hash(data.password, salt);
+      const salt = await bcrypt.genSalt(15);
+      const hashedPass = await bcrypt.hash(data.password, salt);
 
       data.password = hashedPass;
 
@@ -45,13 +45,13 @@ module.exports = async (req) => {
         data.profile_picture = imageRes.secure_url;
         data.profile_picture_id = imageRes.public_id;
       }
-     
-      let created_user = await models.users.create({ ...data });
 
-      if(JSON.parse(data.role) === 55 || data.role === "55"){
-        let created_technician = models.technicians.create({
-          user_id: created_user.dataValues.id
-        })
+      const created_user = await models.users.create({ ...data });
+
+      if (JSON.parse(data.role) === 55 || data.role === "55") {
+        const created_technician = models.technicians.create({
+          user_id: created_user.dataValues.id,
+        });
       }
 
       return resolve(created_user);

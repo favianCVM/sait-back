@@ -5,7 +5,7 @@ const get_all_incidences = require("./get_all_incidences");
 const resolve_incidence = require("./resolve_incidence");
 const conclude_incidence = require("./conclude_incidence");
 const get_incidence = require("./get_incidence");
-const asign_technician = require("./asign_technician");
+const assign_technicians = require("./assign_technicians");
 
 module.exports = {
   create_incidence,
@@ -15,5 +15,5 @@ module.exports = {
   resolve_incidence,
   conclude_incidence,
   get_incidence,
-  asign_technician,
+  assign_technicians,
 };

@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       device_id: DataTypes.INTEGER,
       description: DataTypes.STRING,
       location: DataTypes.STRING,
-      priority: DataTypes.INTEGER
+      priority: DataTypes.INTEGER,
+      status: DataTypes.STRING,
+      date: DataTypes.DATE,
+      end_date: DataTypes.DATE,
     },
     {
       timestamps: false,

@@ -5,8 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     "errors",
     {
       description: DataTypes.INTEGER,
-      date: DataTypes.DATE,
-      priority: DataTypes.INTEGER,
     },
     {
       timestamps: false,
