@@ -5,7 +5,7 @@ module.exports = (req, res) => {
 
   return new Promise(async (resolve, reject) => {
     try {
-      const { technicians, id: incidence_id } = data;
+      const { technicians, incidence_id } = data;
 
       //1ST: get the technicianIncidence table elements
       const technicianIncidences = await models.technicianIncidence.findAll({

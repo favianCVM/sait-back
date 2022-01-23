@@ -6,8 +6,13 @@ module.exports = (req, res) => {
   return new Promise(async (resolve, reject) => {
     try {
       let user = await models.users.findOne({
+        raw:true,
+        nest: true,
         where: {
           email: req.fields.email,
+        },
+        include: {
+          model: models.technicians,
         },
       });
 
@@ -15,8 +20,6 @@ module.exports = (req, res) => {
         return res.status(400).json({
           message: "El email no existe.",
         });
-
-      user = user.dataValues;
 
       let passwordValid = await bcryptjs.compare(
         req.fields.password,
