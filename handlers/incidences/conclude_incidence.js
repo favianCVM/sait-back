@@ -23,28 +23,30 @@ module.exports = (req, res) => {
         }
       );
 
-      let incidence_errors = await models.errors.bulkCreate(
-        {
-          ...JSON.parse(errors),
-        },
-        {
-          raw: true,
-          nest: true,
-        }
+      let created_errors = await models.errors.bulkCreate(
+        JSON.parse(errors).map((el) => ({ ...el, incidence_id }))
       );
 
-      console.log('incidence_errors :', incidence_errors);
+      const errorComponents = created_errors.reduce((acc, item, index) => {
+        item.toJSON();
 
-      // let error_components = await models.errors.bulkCreate(
-      //   {},
-      //   {
-      //     raw: true,
-      //     nest: true,
-      //   }
-      // );
+        let output = JSON.parse(errors)[index].components.map((el) => ({
+          component_id: el,
+          error_id: item.id,
+        }));
+
+        acc = [...acc, ...output];
+
+        return acc;
+      }, []);
+
+      let error_components = await models.errorComponent.bulkCreate(
+        errorComponents
+      )
 
       return resolve(concluded_incidence);
     } catch (error) {
+      console.error(error);
       return reject(error);
     }
   });

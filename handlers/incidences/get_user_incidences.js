@@ -24,12 +24,13 @@ module.exports = (req) => {
             required: true,
           },
           {
-            model: models.incidenceError,
-            include: [
-              {
-                model: models.errors,
+            model: models.errors,
+            include: {
+              model: models.errorComponent,
+              include: {
+                model: models.components,
               },
-            ],
+            },
           },
         ],
       });
@@ -39,6 +40,11 @@ module.exports = (req) => {
 
         item.device.components = item.device.deviceComponents.map((el) => ({
           ...el.component,
+        }));
+
+        item.errors = item.errors.map((el) => ({
+          ...el,
+          components: el.errorComponents.map((il) => ({ ...il.component })),
         }));
 
         acc.push(item);

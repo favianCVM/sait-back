@@ -20,12 +20,13 @@ module.exports = (req) => {
             required: true,
           },
           {
-            model: models.incidenceError,
-            include: [
-              {
-                model: models.errors,
+            model: models.errors,
+            include: {
+              model: models.errorComponent,
+              include: {
+                model: models.components,
               },
-            ],
+            },
           },
           {
             model: models.technicianIncidence,
@@ -49,9 +50,15 @@ module.exports = (req) => {
           ...el.component,
         }));
 
+        item.errors = item.errors.map((el) => ({
+          ...el,
+          components: el.errorComponents.map((il) => ({ ...il.component })),
+        }));
+
         acc.push(item);
         return acc;
       }, []);
+
 
       return resolve(output);
     } catch (err) {
