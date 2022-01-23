@@ -7,7 +7,7 @@ module.exports = (req) => {
 
       return resolve(types);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       return reject(err);
     }
   });

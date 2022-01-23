@@ -3,7 +3,6 @@ const models = require("../../models");
 module.exports = (req, res) => {
   const { files, fields: data } = req;
 
-  console.log("data :", data);
   return new Promise(async (resolve, reject) => {
     try {
       // created incidence

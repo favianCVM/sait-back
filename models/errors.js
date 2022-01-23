@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     "errors",
     {
       description: DataTypes.INTEGER,
+      incidence_id: DataTypes.INTEGER,
     },
     {
       timestamps: false,
@@ -13,7 +14,14 @@ module.exports = (sequelize, DataTypes) => {
   );
   errors.associate = function (models) {
     // associations can be defined here
-    models.errors.hasMany(models.incidenceError);
+    models.errors.belongsTo(models.incidences, {
+      // as: 'users', //this is not necessary
+      through: { model: errors },
+      targetKey: "id",
+      foreignKey: "incidence_id",
+    });
+
+    models.errors.hasMany(models.errorComponent);
   };
   return errors;
 };

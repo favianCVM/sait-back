@@ -37,8 +37,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "device_id",
     });
 
-    models.incidences.hasMany(models.incidenceError);
     models.incidences.hasMany(models.technicianIncidence);
+    models.incidences.hasMany(models.errors);
   };
 
   return incidences;

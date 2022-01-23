@@ -2,8 +2,17 @@ const models = require("../../models");
 
 module.exports = (req) => {
   return new Promise(async (resolve, reject) => {
+    const { id: user_id } = req.params;
     try {
-      let incidences = await models.incidences.findAll({
+      const technician = await models.technicians.findOne({
+        raw: true,
+        nest: true,
+        where: {
+          user_id,
+        },
+      });
+
+      const incidences = await models.incidences.findAll({
         include: [
           {
             model: models.devices,
@@ -30,6 +39,9 @@ module.exports = (req) => {
           },
           {
             model: models.technicianIncidence,
+            where: {
+              technician_id: technician.id,
+            },
             include: {
               model: models.technicians,
               include: {
@@ -42,9 +54,6 @@ module.exports = (req) => {
 
       const output = incidences.reduce((acc, item) => {
         item = item.toJSON();
-        item.technicians = item.technicianIncidences.map((el) => ({
-          ...el.technician,
-        }));
 
         item.device.components = item.device.deviceComponents.map((el) => ({
           ...el.component,
@@ -58,7 +67,6 @@ module.exports = (req) => {
         acc.push(item);
         return acc;
       }, []);
-
 
       return resolve(output);
     } catch (err) {
