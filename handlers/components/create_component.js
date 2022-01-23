@@ -3,7 +3,7 @@ const { uploadImage } = require("../../utils/imageHandler");
 
 module.exports = (req, res) => {
   const { files, fields: data } = req;
-
+  
   return new Promise( async (resolve, reject) => {
     try {
 
@@ -13,7 +13,7 @@ module.exports = (req, res) => {
           picture: files.picture,
         });
         data.picture = imageRes.secure_url;
-        data.picture_id = imageRes.public_id;
+        data.pictureId = imageRes.public_id;
       }
 
       let created_component = await models.components.create({

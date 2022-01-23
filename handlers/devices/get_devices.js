@@ -6,16 +6,16 @@ module.exports = (req) => {
       let devices = await models.devices.findAll({
         include: [
           {
-            model: models.users,
+            model: models.deviceTypes,
             required: true,
           },
           {
             model: models.deviceComponent,
-            required: true,
-            include: {
-              model: models.components,
-              required: true,
-            },
+            include: [
+              {
+                model: models.components,
+              },
+            ],
           },
         ],
       });

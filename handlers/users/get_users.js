@@ -4,11 +4,6 @@ module.exports = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
       let users = await models.users.findAll({
-        include: [
-          {
-            model: models.devices,
-          },
-        ],
       });
 
       users = users.map((userData) => {

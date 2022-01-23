@@ -6,12 +6,29 @@ services:
     image: sait-back-app
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
-      target: development
+      dockerfile: ./docker/local/Dockerfile
+      # target: development
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
-    env_file: 
+    env_file:
       - .env
     ports:
       - 4000:4000
+    depends_on:
+      - node_db
+  node_db:
+    container_name: node_db
+    image: "postgres:12"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=sait
+    volumes:
+      - nps_data:/var/lib/postgresql/data
+
+volumes:
+  nps_data: {}
+

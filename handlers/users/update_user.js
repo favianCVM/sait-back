@@ -3,8 +3,7 @@ const { uploadImage } = require("../../utils/imageHandler");
 
 module.exports = (req) => {
   const { files, fields: data } = req;
-  console.log(data)
-  
+
   return new Promise(async (resolve, reject) => {
     try {
       if (JSON.parse(data.role) === 55 || data.role === "55")

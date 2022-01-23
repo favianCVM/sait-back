@@ -6,20 +6,18 @@ module.exports = (req) => {
       let incidences = await models.incidences.findAll({
         include: [
           {
-            model: models.deviceIncidence,
+            model: models.devices,
+            required: true,
             include: {
-              model: models.devices,
+              model: models.deviceComponent,
+              include: {
+                model: models.components,
+              },
             },
           },
           {
-            model: models.userIncidence,
+            model: models.users,
             required: true,
-            include: [
-              {
-                model: models.users,
-                required: true,
-              },
-            ],
           },
           {
             model: models.incidenceError,
@@ -30,27 +28,30 @@ module.exports = (req) => {
             ],
           },
           {
-            model: models.types,
-            required: true,
+            model: models.technicianIncidence,
+            include: {
+              model: models.technicians,
+              include: {
+                model: models.users,
+              },
+            },
           },
         ],
       });
 
-      let output = incidences.map((el) => {
-        el = el.dataValues;
-        el.user = el.userIncidences[0]?.user?.dataValues || {};
-        el.device = el.deviceIncidences[0]?.device?.dataValues || {};
-        el.errors = el.incidenceErrors.map((il) => ({
-          ...il.error.dataValues,
-          priority: JSON.parse(il.error.priority),
+      const output = incidences.reduce((acc, item) => {
+        item = item.toJSON();
+        item.technicians = item.technicianIncidences.map((el) => ({
+          ...el.technician,
         }));
-        delete el.incidenceErrors;
-        delete el.deviceIncidences;
-        delete el.userIncidences;
-        delete el.user.password;
 
-        return el;
-      });
+        item.device.components = item.device.deviceComponents.map((el) => ({
+          ...el.component,
+        }));
+
+        acc.push(item);
+        return acc;
+      }, []);
 
       return resolve(output);
     } catch (err) {

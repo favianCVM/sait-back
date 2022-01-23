@@ -1,8 +1,8 @@
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
-  const types = sequelize.define(
-    "types",
+  const deviceTypes = sequelize.define(
+    "deviceTypes",
     {
       name: DataTypes.STRING,
     },
@@ -11,10 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
-  types.associate = function (models) {
+
+  deviceTypes.associate = function (models) {
     // associations can be defined here
     // models.types.hasOne(models.devices)
-    models.types.hasMany(models.incidences)
+    models.deviceTypes.hasMany(models.devices);
   };
-  return types;
+  return deviceTypes;
 };

@@ -20,8 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     // models.users.hasOne(models.devices)
 
-    models.users.hasMany(models.userIncidence)
-    models.users.hasMany(models.devices)
+    models.users.hasMany(models.incidences)
 
   };
   return users;
