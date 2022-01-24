@@ -12,9 +12,9 @@ module.exports = (req) => {
             required: true,
           },
           {
-            model: models.technicianError,
+            model: models.technicianIncidence,
             include: {
-              model: models.errors,
+              model: models.incidences,
             },
           },
         ],
