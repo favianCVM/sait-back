@@ -20,7 +20,7 @@ app.get(
         return handleError(
           {
             status: technicians.status || 400,
-            message: "Error al obtener los tecnicos.",
+            message: "Error al obtener los técnicos.",
           },
           {},
           res
@@ -32,7 +32,7 @@ app.get(
       return handleError(
         {
           status: err.status || 500,
-          message: err.message || "Error al obtener los tecnicos.",
+          message: err.message || "Error al obtener los técnicos.",
           errorDetail: err.message,
         },
         {},
