@@ -148,11 +148,21 @@ module.exports = async () => {
 
     --insert users
 
-    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('administrador', 'administrador', 'administrador@admin.com', '${hashedAdminPass}', 'F', '11111111111', '60', '1995-12-17T03:24:00');
+    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('Carlos', 'Pereira', 'carlos@gmail.com', '${hashedAdminPass}', 'M', '11111111111', '60', '1995-12-17T03:24:00');
 
-    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('tecnico', 'tecnico', 'tecnico@tecnico.com', '${hashedTechnicianPass}', 'F', '11111111111', '55', '1995-12-17T03:24:00');
+    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('Yerlin', 'Herrera', 'yerlin@gamil.com', '${hashedAdminPass}', 'F', '12121212121', '60', '1995-12-17T03:24:00');
+
+    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('Dhenisse', 'Velasquez', 'dhenisse@gmail.com', '${hashedAdminPass}', 'F', '144324324324', '50', '1995-12-17T03:24:00');
+
+    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('Fabian', 'Salazar', 'fabian@gmail.com', '${hashedAdminPass}', 'F', '144324324324', '50', '1995-12-17T03:24:00');
+
+    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('Jesus', 'Christo', 'jesus@gmail.com', '${hashedAdminPass}', 'F', '144324324324', '55', '1995-12-17T03:24:00');
+
+    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('Manuel', 'Perez', 'manuel@gmail.com', '${hashedTechnicianPass}', 'M', '4545435455', '55', '1995-12-17T03:24:00');
+
+    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('Vanessa', 'Lopez', 'venessa@gmail.com', '${hashedTechnicianPass}', 'F', '4545435455', '55', '1995-12-17T03:24:00');
     
-    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('usuario', 'usuario', 'usuario@usuario.com', '${hashedUserPass}', 'F', '11111111111', '50', '1995-12-17T03:24:00');
+    INSERT INTO users (first_name, last_name, email, password, sex, dni, role, birth_date) VALUES ('Raul', 'Ponte', 'raul@usuario.com', '${hashedUserPass}', 'F', '11111111111', '50', '1995-12-17T03:24:00');
   `;
   return new Promise((resolve, reject) => {
     db.query(query, (error) => {
