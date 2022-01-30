@@ -6,7 +6,6 @@ module.exports = (req, res) => {
   
   return new Promise( async (resolve, reject) => {
     try {
-
       if (files.picture) {
         let imageRes = await uploadImage({
           folder: process.env.CLOUDINARY_COMPONENTS_FOLDER,
@@ -16,11 +15,11 @@ module.exports = (req, res) => {
         data.pictureId = imageRes.public_id;
       }
 
-      let created_component = await models.components.create({
+      let registered_item_category = await models.components.create({
         ...data
       })
 
-      return resolve(created_component)
+      return resolve(registered_item_category)
     } catch (error) {
       return reject(error)
     }

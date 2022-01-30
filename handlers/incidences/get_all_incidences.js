@@ -1,5 +1,6 @@
 const models = require("../../models");
 const lodash = require("lodash");
+
 module.exports = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -9,9 +10,12 @@ module.exports = (req) => {
             model: models.devices,
             required: true,
             include: {
-              model: models.deviceComponent,
+              model: models.deviceItem,
               include: {
-                model: models.components,
+                model: models.items,
+                include: {
+                  model: models.itemCategories,
+                },
               },
             },
           },
@@ -22,9 +26,9 @@ module.exports = (req) => {
           {
             model: models.errors,
             include: {
-              model: models.errorComponent,
+              model: models.errorItem,
               include: {
-                model: models.components,
+                model: models.items,
               },
             },
           },
@@ -40,29 +44,29 @@ module.exports = (req) => {
         ],
       });
 
-      const output = incidences.reduce((acc, item) => {
-        item = item.toJSON();
-        item.technicians = item.technicianIncidences.map((el) => ({
-          ...el.technician,
-        }));
+      // const output = incidences.reduce((acc, item) => {
+      //   item = item.toJSON();
+      //   item.technicians = item.technicianIncidences.map((el) => ({
+      //     ...el.technician,
+      //   }));
 
-        item.device.components = item.device.deviceComponents.map((el) => ({
-          ...el.component,
-        }));
+      //   item.device.items = item.device.deviceItems.map((el) => ({
+      //     ...el.item,
+      //   }));
 
-        item.errors = lodash.sortBy(
-          item.errors.map((el) => ({
-            ...el,
-            components: el.errorComponents.map((il) => ({ ...il.component })),
-          })),
-          (el) => el.id
-        );
+      //   item.errors = lodash.sortBy(
+      //     item.errors.map((el) => ({
+      //       ...el,
+      //       items: el.errorItem.map((il) => ({ ...il.component })),
+      //     })),
+      //     (el) => el.id
+      //   );
 
-        acc.push(item);
-        return acc;
-      }, []);
+      //   acc.push(item);
+      //   return acc;
+      // }, []);
 
-      return resolve(output);
+      return resolve(incidences);
     } catch (err) {
       return reject(err);
     }

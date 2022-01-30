@@ -16,14 +16,14 @@ module.exports = (req, res) => {
         ...data,
       });
 
-      let created_deviceComponent = await models.deviceComponent.bulkCreate(
+      let registered_device_items = await models.deviceItem.bulkCreate(
         JSON.parse(data.components).map((el) => ({
-          component_id: el,
+          item_id: el,
           device_id: created_device.dataValues.id,
         }))
       );
 
-      return resolve({ ...created_device, created_deviceComponent });
+      return resolve({ ...created_device, registered_device_items });
     } catch (error) {
       return reject(error);
     }

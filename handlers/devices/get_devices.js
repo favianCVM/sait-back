@@ -10,10 +10,10 @@ module.exports = (req) => {
             required: true,
           },
           {
-            model: models.deviceComponent,
+            model: models.deviceItem,
             include: [
               {
-                model: models.components,
+                model: models.items,
               },
             ],
           },

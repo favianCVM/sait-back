@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "device_type_id",
     });
 
-    models.devices.hasMany(models.deviceComponent);
+    models.devices.hasMany(models.deviceItem);
     models.devices.hasMany(models.incidences);
   };
   return devices;
