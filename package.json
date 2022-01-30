@@ -6,11 +6,11 @@
   "scripts": {
     "start": "node index",
     "dev:docker:prod": "docker-compose -f docker-compose.prod.yml up",
-    "dev:docker:local": "docker-compose -f docker-compose.dev.yml up",
+    "dev:docker:local": "docker-compose -f docker-compose.local.yml up",
     "build:docker:prod": "docker-compose -f docker-compose.prod.yml build --no-cache",
-    "build:docker:local": "docker-compose -f docker-compose.dev.yml build --no-cache",
+    "build:docker:local": "docker-compose -f docker-compose.local.yml build --no-cache",
     "down:docker:prod": "docker-compose -f docker-compose.prod.yml down --remove-orphans",
-    "down:docker:local": "docker-compose -f docker-compose.dev.yml down --remove-orphans",
+    "down:docker:local": "docker-compose -f docker-compose.local.yml down --remove-orphans",
     "dev:nodemon": "nodemon --no-warnings -L"
   },
   "author": "",
