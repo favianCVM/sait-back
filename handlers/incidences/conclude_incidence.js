@@ -25,11 +25,11 @@ module.exports = (req, res) => {
         JSON.parse(errors).map((el) => ({ ...el, incidence_id }))
       );
 
-      const errorComponents = created_errors.reduce((acc, item, index) => {
+      const errorItemsData = created_errors.reduce((acc, item, index) => {
         item.toJSON();
 
-        let output = JSON.parse(errors)[index].components.map((el) => ({
-          component_id: el,
+        let output = JSON.parse(errors)[index].items.map((el) => ({
+          item_id: el,
           error_id: item.id,
         }));
 
@@ -38,8 +38,8 @@ module.exports = (req, res) => {
         return acc;
       }, []);
 
-      let error_components = await models.errorComponent.bulkCreate(
-        errorComponents
+      let error_items = await models.errorItem.bulkCreate(
+        errorItemsData
       )
 
       return resolve(concluded_incidence);

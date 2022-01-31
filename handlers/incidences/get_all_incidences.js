@@ -1,5 +1,6 @@
 const models = require("../../models");
 const lodash = require("lodash");
+
 module.exports = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -9,9 +10,12 @@ module.exports = (req) => {
             model: models.devices,
             required: true,
             include: {
-              model: models.deviceComponent,
+              model: models.deviceItem,
               include: {
-                model: models.components,
+                model: models.items,
+                include: {
+                  model: models.itemCategories,
+                },
               },
             },
           },
@@ -22,9 +26,12 @@ module.exports = (req) => {
           {
             model: models.errors,
             include: {
-              model: models.errorComponent,
+              model: models.errorItem,
               include: {
-                model: models.components,
+                model: models.items,
+                include: {
+                  model: models.itemCategories,
+                },
               },
             },
           },
@@ -46,14 +53,14 @@ module.exports = (req) => {
           ...el.technician,
         }));
 
-        item.device.components = item.device.deviceComponents.map((el) => ({
-          ...el.component,
+        item.device.items = item.device.deviceItems.map((el) => ({
+          ...el.item,
         }));
 
         item.errors = lodash.sortBy(
           item.errors.map((el) => ({
             ...el,
-            components: el.errorComponents.map((il) => ({ ...il.component })),
+            items: el.errorItems.map((il) => ({ ...il.item })),
           })),
           (el) => el.id
         );
@@ -63,8 +70,9 @@ module.exports = (req) => {
       }, []);
 
       return resolve(output);
-    } catch (err) {
-      return reject(err);
+    } catch (error) {
+      console.error(error);
+      return reject(error);
     }
   });
 };

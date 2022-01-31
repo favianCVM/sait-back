@@ -18,9 +18,12 @@ module.exports = (req) => {
             model: models.devices,
             required: true,
             include: {
-              model: models.deviceComponent,
+              model: models.deviceItem,
               include: {
-                model: models.components,
+                model: models.items,
+                include: {
+                  model: models.itemCategories,
+                },
               },
             },
           },
@@ -31,17 +34,21 @@ module.exports = (req) => {
           {
             model: models.errors,
             include: {
-              model: models.errorComponent,
+              model: models.errorItem,
               include: {
-                model: models.components,
+                model: models.items,
+                include: {
+                  model: models.itemCategories,
+                },
               },
             },
           },
+
           {
             model: models.technicianIncidence,
-            // where: {
-            //   technician_id: technician.id,
-            // },
+            where: {
+              technician_id: technician.id,
+            },
             include: {
               model: models.technicians,
               include: {
@@ -59,18 +66,16 @@ module.exports = (req) => {
           ...el.technician,
         }));
 
-        console.log(item.technicians);
-
         if (!item.technicians.find((el) => el.user?.id === JSON.parse(user_id)))
           return acc;
 
-        item.device.components = item.device.deviceComponents.map((el) => ({
-          ...el.component,
+        item.device.items = item.device.deviceItems.map((el) => ({
+          ...el.item,
         }));
 
         item.errors = item.errors.map((el) => ({
           ...el,
-          components: el.errorComponents.map((il) => ({ ...il.component })),
+          items: el.errorItems.map((il) => ({ ...il.item })),
         }));
 
         acc.push(item);
@@ -78,9 +83,9 @@ module.exports = (req) => {
       }, []);
 
       return resolve(output);
-    } catch (err) {
-      console.error(err);
-      return reject(err);
+    } catch (error) {
+      console.error(error);
+      return reject(error);
     }
   });
 };

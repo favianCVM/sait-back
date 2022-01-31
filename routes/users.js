@@ -2,7 +2,7 @@ const { Router } = require("express");
 const { handleError } = require("../utils/index");
 const {
   create_user,
-  delete_user,
+  disable_user,
   get_users,
   update_user,
   auth_user,
@@ -128,27 +128,27 @@ app.put("/update-user/:id", require(AUTH)([ADMIN]), async (req, res) => {
   }
 });
 
-app.delete("/delete-user/:id", require(AUTH)([ADMIN]), async (req, res) => {
+app.delete("/disable-user/:id", require(AUTH)([ADMIN]), async (req, res) => {
   try {
-    let deleted_user = await delete_user(req);
+    let disabled_user = await disable_user(req);
 
-    if (deleted_user instanceof Error) {
+    if (disabled_user instanceof Error) {
       return handleError(
         {
-          status: deleted_user.status || 400,
-          message: "Error al eliminar el perfil.",
+          status: disabled_user.status || 400,
+          message: "Error al deshabilitar el perfil.",
         },
         {},
         res
       );
     }
 
-    return res.status(200).json(deleted_user);
+    return res.status(200).json(disabled_user);
   } catch (err) {
     return handleError(
       {
         status: err.status || 500,
-        message: err.message || "Error al eliminar el perfil.",
+        message: err.message || "Error al deshabilitar el perfil.",
         errorDetail: err.message,
       },
       {},

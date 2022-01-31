@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "incidence_id",
     });
 
-    models.errors.hasMany(models.errorComponent);
+    models.errors.hasMany(models.errorItem);
   };
   return errors;
 };

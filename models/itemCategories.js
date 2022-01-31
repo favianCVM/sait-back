@@ -1,24 +1,25 @@
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
-  const components = sequelize.define(
-    "components",
+  const itemCategories = sequelize.define(
+    "itemCategories",
     {
       //TENGO QUE CAMBIAR EL FORMATO DE LOS FOREING KEY A CAMELCASE
       name: DataTypes.STRING,
       description: DataTypes.STRING,
       picture: DataTypes.STRING,
       picture_id: DataTypes.STRING,
+      disabled: DataTypes.INTEGER
     },
     {
       timestamps: false,
       underscored: true,
     }
   );
-  components.associate = function (models) {
+  itemCategories.associate = function (models) {
     // associations can be defined here
 
-    models.components.hasMany(models.errorComponent);
+    models.itemCategories.hasMany(models.items);
   };
-  return components;
+  return itemCategories;
 };

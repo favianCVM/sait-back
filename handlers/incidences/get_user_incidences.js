@@ -13,9 +13,9 @@ module.exports = (req) => {
             model: models.devices,
             required: true,
             include: {
-              model: models.deviceComponent,
+              model: models.deviceItem,
               include: {
-                model: models.components,
+                model: models.items,
               },
             },
           },
@@ -26,9 +26,9 @@ module.exports = (req) => {
           {
             model: models.errors,
             include: {
-              model: models.errorComponent,
+              model: models.errorItem,
               include: {
-                model: models.components,
+                model: models.items,
               },
             },
           },
@@ -38,13 +38,13 @@ module.exports = (req) => {
       const output = incidences.reduce((acc, item) => {
         item = item.toJSON();
 
-        item.device.components = item.device.deviceComponents.map((el) => ({
+        item.device.items = item.device.deviceItems.map((el) => ({
           ...el.component,
         }));
 
         item.errors = item.errors.map((el) => ({
           ...el,
-          components: el.errorComponents.map((il) => ({ ...il.component })),
+          items: el.errorItems.map((il) => ({ ...il.item })),
         }));
 
         acc.push(item);
@@ -52,8 +52,9 @@ module.exports = (req) => {
       }, []);
 
       return resolve(output);
-    } catch (err) {
-      return reject(err);
+    } catch (error) {
+      console.error(error);
+      return reject(error);
     }
   });
 };

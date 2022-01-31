@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       birth_date: DataTypes.DATE,
       profile_picture: DataTypes.STRING,
       profile_picture_id: DataTypes.STRING,
+      disabled: DataTypes.INTEGER,
     },
     {
       timestamps: false,

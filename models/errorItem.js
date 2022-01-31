@@ -1,33 +1,33 @@
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
-  const errorComponent = sequelize.define(
-    "errorComponent",
+  const errorItem = sequelize.define(
+    "errorItem",
     {
       error_id: DataTypes.INTEGER,
-      component_id: DataTypes.INTEGER,
+      item_id: DataTypes.INTEGER,
     },
     {
       timestamps: false,
       underscored: true,
     }
   );
-  errorComponent.associate = function (models) {
+  errorItem.associate = function (models) {
     // associations can be defined here
 
-    models.errorComponent.belongsTo(models.errors, {
+    models.errorItem.belongsTo(models.errors, {
       // as: 'users', //this is not necessary
-      through: { model: errorComponent },
+      through: { model: errorItem },
       targetKey: "id",
       foreignKey: "error_id",
     });
 
-    models.errorComponent.belongsTo(models.components, {
+    models.errorItem.belongsTo(models.items, {
       // as: 'users', //this is not necessary
-      through: { model: errorComponent },
+      through: { model: errorItem },
       targetKey: "id",
-      foreignKey: "component_id",
+      foreignKey: "item_id",
     });
   };
-  return errorComponent;
+  return errorItem;
 };
