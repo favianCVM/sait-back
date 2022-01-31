@@ -8,14 +8,14 @@ module.exports = (req, res) => {
     try {
       if (files.picture) {
         let imageRes = await uploadImage({
-          folder: process.env.CLOUDINARY_COMPONENTS_FOLDER,
+          folder: process.env.CLOUDINARY_ITEMS_FOLDER,
           picture: files.picture,
         });
         data.picture = imageRes.secure_url;
         data.pictureId = imageRes.public_id;
       }
 
-      let registered_item_category = await models.components.create({
+      let registered_item_category = await models.itemCategories.create({
         ...data
       })
 

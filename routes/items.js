@@ -6,6 +6,9 @@ const {
   get_items,
   register_item,
   register_item_category,
+  get_available_items,
+  reincorporate_item,
+  reincorporate_item_category,
 } = require("../handlers/items");
 const { ALL, ADMIN, TECHNICIAN } = require("../auth/roles");
 const AUTH = "../auth";
@@ -16,7 +19,7 @@ app.post(
   require(AUTH)([ADMIN, TECHNICIAN]),
   async (req, res) => {
     try {
-      let registered_item = await register_item(req);
+      let registered_item = await register_item(req, res);
 
       if (registered_item instanceof Error) {
         return handleError(
@@ -114,8 +117,41 @@ app.get(
   }
 );
 
+app.get(
+  "/get-available-items",
+  require(AUTH)([ADMIN, TECHNICIAN]),
+  async (req, res) => {
+    try {
+      let items = await get_available_items(req);
+
+      if (items instanceof Error) {
+        return handleError(
+          {
+            status: items.status || 400,
+            message: "Error al obtener los elementos.",
+          },
+          {},
+          res
+        );
+      }
+
+      return res.status(200).json(items);
+    } catch (err) {
+      return handleError(
+        {
+          status: err.status || 500,
+          message: err.message || "Error al obtener los elementos.",
+          errorDetail: err.message,
+        },
+        {},
+        res
+      );
+    }
+  }
+);
+
 app.delete(
-  "/disable-item",
+  "/disable-item/:id",
   require(AUTH)([ADMIN, TECHNICIAN]),
   async (req, res) => {
     try {
@@ -148,7 +184,7 @@ app.delete(
 );
 
 app.delete(
-  "/disable-item-category",
+  "/disable-item-category/:id",
   require(AUTH)([ADMIN, TECHNICIAN]),
   async (req, res) => {
     try {
@@ -171,6 +207,72 @@ app.delete(
         {
           status: err.status || 500,
           message: err.message || "Error al eliminar el componente.",
+          errorDetail: err.message,
+        },
+        {},
+        res
+      );
+    }
+  }
+);
+
+app.post(
+  "/reincorporate-item/:id",
+  require(AUTH)([ADMIN, TECHNICIAN]),
+  async (req, res) => {
+    try {
+      let reincorporated_item = await reincorporate_item(req);
+
+      if (reincorporated_item instanceof Error) {
+        return handleError(
+          {
+            status: reincorporated_item.status || 400,
+            message: "Error al reincorporar el elemento.",
+          },
+          {},
+          res
+        );
+      }
+
+      return res.status(200).json(reincorporated_item);
+    } catch (err) {
+      return handleError(
+        {
+          status: err.status || 500,
+          message: err.message || "Error al eliminar el elemento.",
+          errorDetail: err.message,
+        },
+        {},
+        res
+      );
+    }
+  }
+);
+
+app.post(
+  "/reincorporate-item-category/:id",
+  require(AUTH)([ADMIN, TECHNICIAN]),
+  async (req, res) => {
+    try {
+      let reincorporated_item_category = await reincorporate_item_category(req);
+
+      if (reincorporated_item_category instanceof Error) {
+        return handleError(
+          {
+            status: reincorporated_item_category.status || 400,
+            message: "Error al reincorporar el elemento.",
+          },
+          {},
+          res
+        );
+      }
+
+      return res.status(200).json(reincorporated_item_category);
+    } catch (err) {
+      return handleError(
+        {
+          status: err.status || 500,
+          message: err.message || "Error al reincorporar el elemento.",
           errorDetail: err.message,
         },
         {},

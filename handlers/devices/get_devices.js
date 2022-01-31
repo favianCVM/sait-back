@@ -14,13 +14,29 @@ module.exports = (req) => {
             include: [
               {
                 model: models.items,
+                include: {
+                  model: models.itemCategories,
+                },
               },
             ],
           },
         ],
       });
 
-      return resolve(devices);
+      const output = devices.reduce((acc, item) => {
+        item = item.toJSON();
+
+        item.items = item.deviceItems.map((el) => ({
+          serial: el.item.serial,
+          id: el.item.id,
+          name: el.item.itemCategory.name,
+        }));
+        
+        acc.push(item);
+        return acc;
+      }, []);
+
+      return resolve(output);
     } catch (err) {
       return reject(err);
     }

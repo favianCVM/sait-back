@@ -6,11 +6,14 @@ module.exports = (req) => {
 
   return new Promise(async (resolve, reject) => {
     try {
-      if (JSON.parse(data.role) === 55 || data.role === "55")
+      if (
+        data.role === "55" &&
+        !(await models.technicians.findOne({ where: { user_id: data.id } }))
+      ) {
         await models.technicians.create({
           user_id: data.id,
         });
-      else
+      } else if (data.role !== "55")
         await models.technicians.destroy({
           where: {
             user_id: data.id,
@@ -28,7 +31,7 @@ module.exports = (req) => {
       }
 
       let update_user = await models.users.update(
-        { ...data },
+        { ...data, disabled: null },
         {
           where: {
             id: req.params.id,
@@ -40,8 +43,9 @@ module.exports = (req) => {
         update_user,
         profile_picture_url: imageRes?.secure_url || null,
       });
-    } catch (err) {
-      return reject(err);
+    } catch (error) {
+      console.error(error);
+      return reject(error);
     }
   });
 };

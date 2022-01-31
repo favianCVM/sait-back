@@ -3,10 +3,9 @@ const models = require("../../models");
 module.exports = (req) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let disabled_item = await models.items.update(
+      let deleted_user = await models.users.update(
         {
           disabled: 1,
-          assigned: null,
         },
         {
           where: {
@@ -15,15 +14,8 @@ module.exports = (req) => {
         }
       );
 
-      await models.deviceItem.destroy({
-        where: {
-          item_id: req.params.id,
-        },
-      });
-
-      return resolve(disabled_item);
+      return resolve(deleted_user);
     } catch (error) {
-      console.error(error);
       return reject(error);
     }
   });

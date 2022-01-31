@@ -4,8 +4,10 @@ module.exports = (sequelize, DataTypes) => {
   const items = sequelize.define(
     "items",
     {
+      disabled: DataTypes.INTEGER,
       serial: DataTypes.STRING,
       item_category_id: DataTypes.INTEGER,
+      assigned: DataTypes.INTEGER
     },
     {
       timestamps: false,
@@ -15,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   items.associate = function (models) {
     // associations can be defined here
 
-    models.errorItem.belongsTo(models.itemCategories, {
+    models.items.belongsTo(models.itemCategories, {
       // as: 'users', //this is not necessary
       through: { model: items },
       targetKey: "id",
@@ -23,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     models.items.hasMany(models.errorItem);
+    models.items.hasMany(models.deviceItem);
   };
   return items;
 };

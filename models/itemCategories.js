@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       description: DataTypes.STRING,
       picture: DataTypes.STRING,
       picture_id: DataTypes.STRING,
+      disabled: DataTypes.INTEGER
     },
     {
       timestamps: false,

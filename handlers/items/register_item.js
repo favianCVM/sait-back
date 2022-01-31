@@ -6,17 +6,18 @@ module.exports = (req, res) => {
 
   return new Promise(async (resolve, reject) => {
     try {
-      if (data.item_category_id === "new") {
-        await models.itemCategories.create(
-          {
-            ...data.item_category,
-          },
-          {
-            raw: true,
-            nested: true,
-          }
-        );
-      }
+      let used_serial = await models.items.findOne({
+        where: {
+          serial: data.serial,
+          item_category_id: data.item_category_id,
+        },
+      });
+
+      if (used_serial)
+        return res.status(400).json({
+          message: "El serial se encuentra registrado.",
+        });
+
       let registered_item = await models.items.create({
         ...data,
       });

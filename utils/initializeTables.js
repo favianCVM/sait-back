@@ -20,7 +20,9 @@ module.exports = async () => {
     DROP TABLE IF EXISTS device_types cascade;
     DROP TABLE IF EXISTS incidences cascade;
     DROP TABLE IF EXISTS incidence_errors cascade;
+    DROP TABLE IF EXISTS error_items cascade;
     DROP TABLE IF EXISTS device_components cascade;
+    DROP TABLE IF EXISTS item_categories cascade;
     DROP TABLE IF EXISTS device_items cascade;
     DROP TABLE IF EXISTS device_incidences cascade;
     DROP TABLE IF EXISTS error_components cascade;
@@ -51,6 +53,7 @@ module.exports = async () => {
       "serial" varchar(400),
       "item_category_id" int4 NOT NULL,
       "disabled" int4,
+      "assigned" int4,
       CONSTRAINT "_copy_2" PRIMARY KEY ("id")
     );
 
@@ -60,6 +63,7 @@ module.exports = async () => {
       "description" varchar(400) NOT NULL,
       "picture" varchar(400),
       "picture_id" varchar(400),
+      "disabled" int4,
       CONSTRAINT "_copy_3" PRIMARY KEY ("id")
     );
       

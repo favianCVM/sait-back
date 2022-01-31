@@ -29,6 +29,9 @@ module.exports = (req) => {
               model: models.errorItem,
               include: {
                 model: models.items,
+                include: {
+                  model: models.itemCategories,
+                },
               },
             },
           },
@@ -44,31 +47,32 @@ module.exports = (req) => {
         ],
       });
 
-      // const output = incidences.reduce((acc, item) => {
-      //   item = item.toJSON();
-      //   item.technicians = item.technicianIncidences.map((el) => ({
-      //     ...el.technician,
-      //   }));
+      const output = incidences.reduce((acc, item) => {
+        item = item.toJSON();
+        item.technicians = item.technicianIncidences.map((el) => ({
+          ...el.technician,
+        }));
 
-      //   item.device.items = item.device.deviceItems.map((el) => ({
-      //     ...el.item,
-      //   }));
+        item.device.items = item.device.deviceItems.map((el) => ({
+          ...el.item,
+        }));
 
-      //   item.errors = lodash.sortBy(
-      //     item.errors.map((el) => ({
-      //       ...el,
-      //       items: el.errorItem.map((il) => ({ ...il.component })),
-      //     })),
-      //     (el) => el.id
-      //   );
+        item.errors = lodash.sortBy(
+          item.errors.map((el) => ({
+            ...el,
+            items: el.errorItems.map((il) => ({ ...il.item })),
+          })),
+          (el) => el.id
+        );
 
-      //   acc.push(item);
-      //   return acc;
-      // }, []);
+        acc.push(item);
+        return acc;
+      }, []);
 
-      return resolve(incidences);
-    } catch (err) {
-      return reject(err);
+      return resolve(output);
+    } catch (error) {
+      console.error(error);
+      return reject(error);
     }
   });
 };
